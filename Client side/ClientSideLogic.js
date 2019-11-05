@@ -14,11 +14,13 @@ window.onload = function () {
 function press(e) {
     e.target.style.background = "skyblue";
     e.target.style.fontWeight = "bold";
+    //start the corresponding engine(s)
 }
 
 function release(e) {
     e.target.style.background = "lightgrey";
     e.target.style.fontWeight = "normal";
+    //stop the corresponding engine(s)
 }
 
 function keyOn(e) {
@@ -42,6 +44,7 @@ function keyOn(e) {
             document.getElementById("down").style.fontWeight = "bold";
             break;
     }
+    //start the corresponding engine(s)
 }
 
 function keyOff(e) {
@@ -65,4 +68,5 @@ function keyOff(e) {
             document.getElementById("down").style.fontWeight = "normal";
             break;
     }
+    //stop the corresponding engine(s)
 }
