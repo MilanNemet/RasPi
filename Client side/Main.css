@@ -7,24 +7,25 @@ button {
     width: 50px;
     height: 50px;
     font-size: 32px;
-    margin: 1px;
+    margin: 2px;
     background: lightgrey;
 }
 
 canvas {
-    width: 320px;
-    height: 160px;
+    width: 100%;
+    height: 100%;
     border: 1px solid #000000;
 }
 
 .container {
-    width: 100%;
+    max-width: 1400px;
+    margin: auto;
 }
 
 iframe {
-    width: 600px;
+    width: 450px;
     height: 450px;
-    margin: 20px 0px 0px 0px;
+    margin: 20px 30px 0px 10px;
 }
 
 img {
@@ -37,7 +38,7 @@ img {
 }
 
 .rhs {
-    float: right;
+    float: left;
 }
 
 p {
