@@ -1,10 +1,11 @@
 // JavaScript source code
+var _toggle = false;
 window.onload = function () {
-    var buttons = document.getElementsByTagName("button");
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("mousedown", function (e) { press(e) });
-        buttons[i].addEventListener("mouseup", function (e) { release(e) });
-        buttons[i].addEventListener("mouseout", function (e) { release(e) });
+    var controlButtons = document.querySelectorAll(".controller > button");
+    for (var i = 0; i < controlButtons.length; i++) {
+        controlButtons[i].addEventListener("mousedown", function (e) { press(e) });
+        controlButtons[i].addEventListener("mouseup", function (e) { release(e) });
+        controlButtons[i].addEventListener("mouseout", function (e) { release(e) });
     }
 
     document.addEventListener("keydown", function (e) { keyOn(e) });
@@ -13,7 +14,19 @@ window.onload = function () {
 
 function press(e) {
     e.target.style.background = "skyblue";
-    //start the corresponding engine(s)
+    ////start the corresponding engine(s):
+    //var buttonId = e.target.id;
+    //switch (buttonId) {
+    //    case "up":
+    //        break;
+    //    case "down":
+    //        break;
+    //    case "left":
+    //        break;
+    //    case "right":
+    //        break;
+    //    default:
+    //}
 }
 
 function release(e) {

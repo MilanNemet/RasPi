@@ -3,7 +3,11 @@
     padding: 0;
 }
 
-button {
+#toggle {
+
+}
+
+.controller > button {
     width: 50px;
     height: 50px;
     font-size: 20px;
@@ -43,7 +47,7 @@ img {
     float: left;
 }
 
-p {
+.controller {
     text-align: center;
 }
 
