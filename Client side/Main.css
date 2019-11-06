@@ -3,8 +3,19 @@
     padding: 0;
 }
 
-#toggle {
+.active {
+    background-color: skyblue;
+}
+
+.passive {
     background-color: lightgrey;
+}
+
+.hovered {
+    background-color: #CCC;
+}
+
+#toggle {
     padding: 5px;
     position: relative;
     top: -120px;
@@ -16,7 +27,6 @@
     height: 50px;
     font-size: 20px;
     margin: 2px;
-    background: lightgrey;
     text-align: center;
     vertical-align: central;
 }

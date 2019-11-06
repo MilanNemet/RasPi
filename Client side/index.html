@@ -5,15 +5,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RasPi</title>
-    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" type="text/css" href="Main.css">
     <script src="ClientSideLogic.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="lhs">
             <iframe src="https://www.youtube.com/embed/hHW1oY26kxQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p class="controller"><button id="up">&#9650;</button> <br /> <button id="left">&#9668;</button><button id="down">&#9660;</button><button id="right">&#9658;</button></p>
-            <p><button id="toggle">Toggle OFF</button></p>
+            <p class="controller">
+                <button id="up" class="passive">&#9650;</button> <br /> 
+                <button id="left" class="passive">&#9668;</button><button id="down" class="passive">&#9660;</button><button id="right" class="passive">&#9658;</button>
+            </p>
+            <p><button id="toggle" class="passive">Toggle OFF</button></p>
         </div>
 
         <div class="rhs">

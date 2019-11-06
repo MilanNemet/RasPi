@@ -1,32 +1,39 @@
-// JavaScript source code
-
-var _toggle = false;
-var active = false;
 var mouseoverHandler = function (e) { hover(e) };
 var mouseDownHandler = function (e) { press(e) };
 var mouseUpOrOutHandler = function (e) { release(e) };
-var clickHandler = function (e) { click(e, active); active = !active;};
+var clickSwitchHandler = function (e) { clickSwitch(e) };
+
+var keydownHandler = function (e) { keyOn(e) };
+var keyupHandler = function (e) { keyOff(e) };
+var keySwitchHandler = function (e) { keySwitch(e) };
+
 
 window.onload = function () {
     initButtonsControlDefault();
     initKeysControlDefault();
-    initButtonToggle(_toggle);
+    initButtonToggle();
 }
 
-function initButtonToggle(_toggle) {
+function initButtonToggle() {
     var toggleButton = document.getElementById("toggle");
     toggleButton.addEventListener("click", function () {
-        toggleButton.style.background = (_toggle ? "lightgrey": "#333");
-        toggleButton.style.color = (_toggle ? "black" : "white");
-        toggleButton.innerHTML = (_toggle ? "Toggle OFF" : "Toggle ON&nbsp;&nbsp;");
-        if (_toggle) {
+
+        if (toggleButton.className === "active") {
+
             initButtonsControlDefault();
-            //initKeysControlDefault();
+            initKeysControlDefault();
+
+            toggleButton.className = "passive";
+            toggleButton.innerHTML = "Toggle ON&nbsp;&nbsp;";
         }
         else {
+
             initButtonsControlToggle();
+            initKeysControlToggle();
+
+            toggleButton.className = "active";
+            toggleButton.innerHTML = "Toggle OFF";
         }
-        _toggle = !_toggle;
     });
 }
 
@@ -34,12 +41,11 @@ function initButtonsControlDefault() {
     var controlButtons = document.querySelectorAll(".controller > button");
     for (var i = 0; i < controlButtons.length; i++) {
         controlButtons[i].addEventListener("mouseover", mouseoverHandler);
-
         controlButtons[i].addEventListener("mousedown", mouseDownHandler);
         controlButtons[i].addEventListener("mouseup", mouseUpOrOutHandler);
         controlButtons[i].addEventListener("mouseout", mouseUpOrOutHandler);
 
-        controlButtons[i].removeEventListener("click", clickHandler);
+        controlButtons[i].removeEventListener("click", clickSwitchHandler);
     }
 }
 
@@ -47,7 +53,7 @@ function initButtonsControlToggle() {
     
     var controlButtons = document.querySelectorAll(".controller > button");
     for (var i = 0; i < controlButtons.length; i++) {
-        controlButtons[i].addEventListener("click", (e) => clickHandler(e, active));
+        controlButtons[i].addEventListener("click", clickSwitchHandler);
 
         controlButtons[i].removeEventListener("mouseover", mouseoverHandler);
         controlButtons[i].removeEventListener("mousedown", mouseDownHandler);
@@ -57,17 +63,25 @@ function initButtonsControlToggle() {
 }
 
 function initKeysControlDefault() {
-    document.addEventListener("keydown", function (e) { keyOn(e) });
-    document.addEventListener("keyup", function (e) { keyOff(e) });
+    document.addEventListener("keydown", keydownHandler);
+    document.addEventListener("keyup", keyupHandler);
+
+    document.removeEventListener("keypress", keySwitchHandler);
+}
+
+function initKeysControlToggle() {
+    document.addEventListener("keydown", keySwitchHandler);
+
+    document.removeEventListener("keydown", keydownHandler);
+    document.removeEventListener("keyup", keyupHandler);
 }
 
 function hover(e) {
-    e.target.style.background = "#CCC";
-    //stop the corresponding engine(s)
+    e.target.className = "hovered";
 }
 
 function press(e) {
-    e.target.style.background = "skyblue";
+    e.target.className = "active";
     //////start the corresponding engine(s):
     //var buttonId = e.target.id;
     //switch (buttonId) {
@@ -84,34 +98,36 @@ function press(e) {
 }
 
 function release(e) {
-    e.target.style.background = "lightgrey";
+    e.target.className = "passive";
     //stop the corresponding engine(s)
 }
 
-function click(e, active) {
-    if (active) {
-        e.target.style.background = "lightgrey";
+function clickSwitch(e) {
+    if (e.target.className === "active") {
+        e.target.className = "passive";
+        //stop the corresponding engine(s)
     }
     else {
-        e.target.style.background = "skyblue";
+        e.target.className = "active";
+        //start the corresponding engine(s):
     }
 }
 
 function keyOn(e) {
-    var key = event.which || event.keyCode;
+    var key = e.which || e.keyCode;
     
     switch (key) {
         case 37: //left
-            document.getElementById("left").style.background = "skyblue";
+            document.getElementById("left").className = "active";
             break;
         case 38: //up
-            document.getElementById("up").style.background = "skyblue";
+            document.getElementById("up").className = "active";
             break;
         case 39: //right
-            document.getElementById("right").style.background = "skyblue";
+            document.getElementById("right").className = "active";
             break;
         case 40: //down
-            document.getElementById("down").style.background = "skyblue";
+            document.getElementById("down").className = "active";
             break;
     }
     //start the corresponding engine(s)
@@ -122,20 +138,50 @@ function keyOff(e) {
 
     switch (key) {
         case 37: //left
-            document.getElementById("left").style.background = "lightgrey";
+            document.getElementById("left").className = "passive";
             break;
         case 38: //up
-            document.getElementById("up").style.background = "lightgrey";
+            document.getElementById("up").className = "passive";
             break;
         case 39: //right
-            document.getElementById("right").style.background = "lightgrey";
+            document.getElementById("right").className = "passive";
             break;
         case 40: //down
-            document.getElementById("down").style.background = "lightgrey";
+            document.getElementById("down").className = "passive";
             break;
     }
     //stop the corresponding engine(s)
 }
+
+function keySwitch(e) {
+    var key = e.which || e.keyCode;
+
+    switch (key) {
+        case 37: //left
+            console.log(e.key);
+            var leftButton = document.getElementById("left");
+            leftButton.className === "active" ? leftButton.className = "passive" : leftButton.className = "active";
+            break;
+        case 38: //up
+            console.log(e.key);
+            var uptButton = document.getElementById("up");
+            uptButton.className === "active" ? uptButton.className = "passive" : uptButton.className = "active";
+            break;
+        case 39: //right
+            console.log(e.key);
+            var rightButton = document.getElementById("right");
+            rightButton.className === "active" ? rightButton.className = "passive" : rightButton.className = "active";
+            break;
+        case 40: //down
+            console.log(e.key);
+            var downButton = document.getElementById("down");
+            downButton.className === "active" ? downButton.className = "passive" : downButton.className = "active";
+            break;
+    }
+    //start or stop the corresponding engine(s)
+}
+
+
 
 // space and arrow keys won't scroll the page:
 window.addEventListener("keydown", function (e) {
