@@ -4,7 +4,11 @@
 }
 
 #toggle {
-
+    background-color: lightgrey;
+    padding: 5px;
+    position: relative;
+    top: -120px;
+    left: 40px;
 }
 
 .controller > button {
