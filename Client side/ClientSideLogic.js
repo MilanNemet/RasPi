@@ -8,11 +8,72 @@ var keyupHandler = function (e) { keyOff(e) };
 var keySwitchHandler = function (e) { keySwitch(e) };
 
 
+const msgGreeting = {
+    type: "control",
+    value: "greeting",
+    timeStamp: new Date().toLocaleString()
+};
+const msgGoodbye = {
+    type: "control",
+    value: "goodbye",
+    timeStamp: new Date().toLocaleString()
+};
+const msgError = {
+    type: "control",
+    value: "error",
+    timeStamp: new Date().toLocaleString()
+};
+/******************/
+const msgForward = {
+    type: "msg",
+    value: "F",
+    timeStamp: new Date().toLocaleString()
+};
+const msgBackward = {
+    type: "msg",
+    value: "B",
+    timeStamp: new Date().toLocaleString()
+};
+const msgLeft = {
+    type: "msg",
+    value: "L",
+    timeStamp: new Date().toLocaleString()
+};
+const msgRight = {
+    type: "msg",
+    value: "R",
+    timeStamp: new Date().toLocaleString()
+};
+const msgStop = {
+    type: "msg",
+    value: "S",
+    timeStamp: new Date().toLocaleString()
+};
+
+
+
+
+/************************************************/
+/************************************************/
 window.onload = function () {
     initButtonsControlDefault();
     initKeysControlDefault();
     initButtonToggle();
+
+    //const mySocket = new WebSocket('ws://127.0.0.1:80/');
+    //mySocket.addEventListener('open', function (event) { this.console.log("connection is living"); });
+    //mySocket.addEventListener('message', function (event) { console.log(event.data); });
+
+    console.log(JSON.stringify(msgGreeting));
+    console.log(JSON.stringify(msgError));
+    console.log(JSON.stringify(msgGoodbye));
+
+    //mySocket.send(JSON.stringify(msgGreeting));
+    //mySocket.send(JSON.stringify(msgError));
+    //mySocket.send(JSON.stringify(msgGoodbye));
 }
+/************************************************/
+/************************************************/
 
 function initButtonToggle() {
     var toggleButton = document.getElementById("toggle");
