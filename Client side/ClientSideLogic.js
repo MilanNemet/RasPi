@@ -9,71 +9,70 @@ var keySwitchHandler = function (e) { keySwitch(e) };
 
 
 const msgGreeting = {
-    type: "control",
+    type: "auth",
     value: "greeting",
     timeStamp: new Date().toLocaleString()
 };
 const msgGoodbye = {
-    type: "control",
+    type: "auth",
     value: "goodbye",
     timeStamp: new Date().toLocaleString()
 };
 const msgError = {
-    type: "control",
+    type: "auth",
     value: "error",
     timeStamp: new Date().toLocaleString()
 };
 /******************/
 const msgForward = {
-    type: "msg",
+    type: "control",
     value: "F",
     timeStamp: new Date().toLocaleString()
 };
 const msgBackward = {
-    type: "msg",
+    type: "control",
     value: "B",
     timeStamp: new Date().toLocaleString()
 };
 const msgLeft = {
-    type: "msg",
+    type: "control",
     value: "L",
     timeStamp: new Date().toLocaleString()
 };
 const msgRight = {
-    type: "msg",
+    type: "control",
     value: "R",
     timeStamp: new Date().toLocaleString()
 };
 const msgStop = {
-    type: "msg",
+    type: "control",
     value: "S",
     timeStamp: new Date().toLocaleString()
 };
 
 
 
+const mySocket = new WebSocket('wss://echo.websocket.org/');
+mySocket.addEventListener('open', function (event) { console.log("connection is living"); mySocket.send(JSON.stringify(msgGreeting)); });
+mySocket.addEventListener('message', function (event) { console.log(event.data); });
 
-/************************************************/
-/************************************************/
+
+/************************************************************************************************/
+/************************************************************************************************/
 window.onload = function () {
     initButtonsControlDefault();
     initKeysControlDefault();
     initButtonToggle();
 
-    //const mySocket = new WebSocket('ws://127.0.0.1:80/');
-    //mySocket.addEventListener('open', function (event) { this.console.log("connection is living"); });
-    //mySocket.addEventListener('message', function (event) { console.log(event.data); });
-
-    console.log(JSON.stringify(msgGreeting));
-    console.log(JSON.stringify(msgError));
-    console.log(JSON.stringify(msgGoodbye));
-
-    //mySocket.send(JSON.stringify(msgGreeting));
-    //mySocket.send(JSON.stringify(msgError));
-    //mySocket.send(JSON.stringify(msgGoodbye));
+    
 }
-/************************************************/
-/************************************************/
+/************************************************************************************************/
+/************************************************************************************************/
+
+
+function sendMessage(constObj) {
+    mySocket.send(JSON.stringify(constObj))
+}
 
 function initButtonToggle() {
     var toggleButton = document.getElementById("toggle");
@@ -143,34 +142,58 @@ function hover(e) {
 
 function press(e) {
     e.target.className = "active";
-    //////start the corresponding engine(s):
-    //var buttonId = e.target.id;
-    //switch (buttonId) {
-    //    case "up":
-    //        break;
-    //    case "down":
-    //        break;
-    //    case "left":
-    //        break;
-    //    case "right":
-    //        break;
-    //    default:
-    //}
+    ////start the corresponding engine(s):
+    var buttonId = e.target.id;
+    switch (buttonId) {
+        case "up":
+            sendMessage(msgForward);
+            break;
+        case "down":
+            sendMessage(msgBackward);
+            break;
+        case "left":
+            sendMessage(msgLeft);
+            break;
+        case "right":
+            sendMessage(msgRight);
+            break;
+        default:
+            sendMessage(msgError);
+    }
 }
 
 function release(e) {
     e.target.className = "passive";
-    //stop the corresponding engine(s)
+    //stop the corresponding engine(s):
+    sendMessage(msgStop);
 }
 
 function clickSwitch(e) {
     if (e.target.className === "active") {
         e.target.className = "passive";
-        //stop the corresponding engine(s)
+        //stop the corresponding engine(s):     //// ha több motort is elindít a user párhuzamosan, akkor melyiket állítsuk le...? (const StopAll; const StopId ???)
+        sendMessage(msgStop);
     }
     else {
         e.target.className = "active";
         //start the corresponding engine(s):
+        var buttonId = e.target.id; //////////////két helyen ugyan az a switch, ki kéne szervezni függvénybe
+        switch (buttonId) {
+            case "up":
+                sendMessage(msgForward);
+                break;
+            case "down":
+                sendMessage(msgBackward);
+                break;
+            case "left":
+                sendMessage(msgLeft);
+                break;
+            case "right":
+                sendMessage(msgRight);
+                break;
+            default:
+                sendMessage(msgError);
+        }
     }
 }
 
