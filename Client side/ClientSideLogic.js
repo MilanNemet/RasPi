@@ -7,6 +7,7 @@ var keydownHandler = function (e) { keyOn(e) };
 var keyupHandler = function (e) { keyOff(e) };
 var keySwitchHandler = function (e) { keySwitch(e) };
 
+var mouseDown = false;
 
 const msgGreeting = {
     type: "auth",
@@ -44,11 +45,16 @@ const msgRight = {
     value: "R",
     timeStamp: new Date().toLocaleString()
 };
-const msgStop = {
+const msgStopAll = {
     type: "control",
     value: "S",
     timeStamp: new Date().toLocaleString()
 };
+function msgStopId(id) {
+    this.type = "control";
+    this.value = "S"+id;
+    this.timeStamp = new Date().toLocaleString();
+}
 
 
 
@@ -56,23 +62,21 @@ const mySocket = new WebSocket('wss://echo.websocket.org/');
 mySocket.addEventListener('open', function (event) { console.log("connection is living"); mySocket.send(JSON.stringify(msgGreeting)); });
 mySocket.addEventListener('message', function (event) { console.log(event.data); });
 
+function sendMessage(obj) {
+    mySocket.send(JSON.stringify(obj))
+}
+
 
 /************************************************************************************************/
 /************************************************************************************************/
 window.onload = function () {
     initButtonsControlDefault();
     initKeysControlDefault();
-    initButtonToggle();
-
-    
+    initButtonToggle();    
 }
 /************************************************************************************************/
 /************************************************************************************************/
 
-
-function sendMessage(constObj) {
-    mySocket.send(JSON.stringify(constObj))
-}
 
 function initButtonToggle() {
     var toggleButton = document.getElementById("toggle");
@@ -84,7 +88,7 @@ function initButtonToggle() {
             initKeysControlDefault();
 
             toggleButton.className = "passive";
-            toggleButton.innerHTML = "Toggle ON&nbsp;&nbsp;";
+            toggleButton.innerHTML = "Toggle ON";
         }
         else {
 
@@ -160,19 +164,24 @@ function press(e) {
         default:
             sendMessage(msgError);
     }
+    mouseDown = true;
 }
 
 function release(e) {
+    if (mouseDown) { //only take the action if LMB is under pressure
     e.target.className = "passive";
-    //stop the corresponding engine(s):
-    sendMessage(msgStop);
+        //stop the corresponding engine(s):
+        var msg = new msgStopId(e.target.id);
+        sendMessage(msg);
+    }
+    mouseDown = false;
 }
 
 function clickSwitch(e) {
     if (e.target.className === "active") {
         e.target.className = "passive";
         //stop the corresponding engine(s):     //// ha több motort is elindít a user párhuzamosan, akkor melyiket állítsuk le...? (const StopAll; const StopId ???)
-        sendMessage(msgStop);
+        sendMessage(msgStopAll);
     }
     else {
         e.target.className = "active";
@@ -244,7 +253,7 @@ function keySwitch(e) {
         case 37: //left
             console.log(e.key);
             var leftButton = document.getElementById("left");
-            leftButton.className === "active" ? leftButton.className = "passive" : leftButton.className = "active";
+            leftButton.className === "active" ? leftButton.className = "passive" : /*leftButton.className = "active"*/null;
             break;
         case 38: //up
             console.log(e.key);
