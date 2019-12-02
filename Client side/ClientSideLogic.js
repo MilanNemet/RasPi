@@ -7,7 +7,6 @@ var keydownHandler = function (e) { keyOn(e) };
 var keyupHandler = function (e) { keyOff(e) };
 var keySwitchHandler = function (e) { keySwitch(e) };
 
-var isMouseDown = false;
 
 const msgGreeting = {
     type: "auth",
@@ -73,7 +72,7 @@ function sendMessage(obj) {
 window.onload = function () {
     initButtonsControlDefault();
     initKeysControlDefault();
-    initButtonToggle();    
+    initToggleButton();    
 }
 /************************************************************************************************/
 /************************************************************************************************/
@@ -82,7 +81,7 @@ window.onload = function () {
 
 /********************** INITIALIZERS FOR CONTROLS **********************/
 
-function initButtonToggle() {
+function initToggleButton() {
     var toggleButton = document.getElementById("toggle");
     toggleButton.addEventListener("click", function () {
 
@@ -148,16 +147,18 @@ function initKeysControlToggle() {
 
 /********************** MOUSE CONTROLS **********************/
 
+var isMouseDown = false;
+
 function hover(e) {
     e.target.className = "hovered";
 }
 
 function pressLMB(e) {
-    e.target.className = "active";
-    //start the corresponding engine(s):
-    var targetId = e.target.id;
-    sendById(targetId);
     isMouseDown = true;
+    var target = e.target;
+    target.className = "active";
+    //start the corresponding engine(s):
+    sendById(target.id);
 }
 function releaseLMB(e) {
     if (isMouseDown) { //only take the action if LMB is under pressure(important for mouseout event)
@@ -169,16 +170,16 @@ function releaseLMB(e) {
 }
 
 function clickLMB(e) {
-    var targetId = e.target.id;
-    if (e.target.className === "active") {
-        e.target.className = "passive";
-        //stop the corresponding engine(s):     //// ha több motort is elindít a user párhuzamosan, akkor melyiket állítsuk le...? (const StopAll; const StopId ???)
-        sendMessage(new msgStopId(targetId));
+    var target = e.target;
+    if (target.className === "active") {
+        target.className = "passive";
+        //stop the corresponding engine(s):
+        sendMessage(new msgStopId(target.id));
     }
     else {
-        e.target.className = "active";
+        target.className = "active";
         //start the corresponding engine(s):
-        sendById(targetId);
+        sendById(target.id);
     }
 }
 
@@ -205,77 +206,120 @@ function sendById(targetId) {
 
 /********************** KEYBOARD CONTROLS **********************/
 
+var isKeyDown = false;
+
 function keyOn(e) {
     var key = e.which || e.keyCode;
-    
-    switch (key) {
-        case 37: //left
-            document.getElementById("L").className = "active";
-            break;
-        case 38: //up
-            document.getElementById("F").className = "active";
-            break;
-        case 39: //right
-            document.getElementById("R").className = "active";
-            break;
-        case 40: //down
-            document.getElementById("B").className = "active";
-            break;
-    }
+    changeState(key, false);
+    //switch (key) {
+    //    case 37: //left
+    //        document.getElementById("L").className = "active";
+    //        break;
+    //    case 38: //up
+    //        document.getElementById("F").className = "active";
+    //        break;
+    //    case 39: //right
+    //        document.getElementById("R").className = "active";
+    //        break;
+    //    case 40: //down
+    //        document.getElementById("B").className = "active";
+    //        break;
+    //}
     //start the corresponding engine(s)
 }
 
 function keyOff(e) {
     var key = event.which || event.keyCode;
-
-    switch (key) {
-        case 37: //left
-            document.getElementById("L").className = "passive";
-            break;
-        case 38: //up
-            document.getElementById("F").className = "passive";
-            break;
-        case 39: //right
-            document.getElementById("R").className = "passive";
-            break;
-        case 40: //down
-            document.getElementById("B").className = "passive";
-            break;
-    }
+    changeState(key, true);
+    //switch (key) {
+    //    case 37: //left
+    //        document.getElementById("L").className = "passive";
+    //        break;
+    //    case 38: //up
+    //        document.getElementById("F").className = "passive";
+    //        break;
+    //    case 39: //right
+    //        document.getElementById("R").className = "passive";
+    //        break;
+    //    case 40: //down
+    //        document.getElementById("B").className = "passive";
+    //        break;
+    //}
     //stop the corresponding engine(s)
 }
 
 function keySwitch(e) {
     var key = e.which || e.keyCode;
+    changeState(key, null);
+    //switch (key) {
+    //    case 37: //left
+    //        console.log(e.key);
+    //        var leftButton = document.getElementById("L");
+    //        leftButton.className === "active" ? leftButton.className = "passive" : leftButton.className = "active";
+    //        break;
+    //    case 38: //up
+    //        console.log(e.key);
+    //        var uptButton = document.getElementById("F");
+    //        uptButton.className === "active" ? uptButton.className = "passive" : uptButton.className = "active";
+    //        break;
+    //    case 39: //right
+    //        console.log(e.key);
+    //        var rightButton = document.getElementById("R");
+    //        rightButton.className === "active" ? rightButton.className = "passive" : rightButton.className = "active";
+    //        break;
+    //    case 40: //down
+    //        console.log(e.key);
+    //        var downButton = document.getElementById("B");
+    //        downButton.className === "active" ? downButton.className = "passive" : downButton.className = "active";
+    //        break;
+    //}
+    //start or stop the corresponding engine(s)
+}
 
+function changeState(key, boolConst) {
+    var helper = boolConst != null;
     switch (key) {
         case 37: //left
-            console.log(e.key);
             var leftButton = document.getElementById("L");
-            leftButton.className === "active" ? leftButton.className = "passive" : leftButton.className = "active";
+            var lbClass = leftButton.className === "active";
+            flipState(helper ? boolConst : lbClass, leftButton, msgLeft);
+            //leftButton.className === "active" ? setStop(leftButton, new msgStopId(leftButton.id)) : setStart(leftButton, msgLeft);
             break;
         case 38: //up
-            console.log(e.key);
-            var uptButton = document.getElementById("F");
-            uptButton.className === "active" ? uptButton.className = "passive" : uptButton.className = "active";
+            var upButton = document.getElementById("F");
+            var ubClass = upButton.className === "active";
+            flipState(helper ? boolConst : ubClass, upButton, msgForward);
+            //upButton.className === "active" ? uptButton.className = "passive" : uptButton.className = "active";
             break;
         case 39: //right
-            console.log(e.key);
             var rightButton = document.getElementById("R");
-            rightButton.className === "active" ? rightButton.className = "passive" : rightButton.className = "active";
+            var rbClass = rightButton.className === "active";
+            flipState(helper ? boolConst : rbClass, rightButton, msgRight);
+            //rightButton.className === "active" ? rightButton.className = "passive" : rightButton.className = "active";
             break;
         case 40: //down
-            console.log(e.key);
             var downButton = document.getElementById("B");
-            downButton.className === "active" ? downButton.className = "passive" : downButton.className = "active";
+            var dbClass = downButton.className === "active";
+            flipState(helper ? boolConst : dbClass, downButton, msgBackward);
+            //downButton.className === "active" ? downButton.className = "passive" : downButton.className = "active";
             break;
     }
-    //start or stop the corresponding engine(s)
+}
+function flipState(isActive, thisButton, msgWhich) {
+    isActive ? setStop(thisButton, new msgStopId(thisButton.id)) : setStart(thisButton, msgWhich);
+}
+function setStart(thisButton, obj) {
+    thisButton.className = "active";
+    sendMessage(obj); //msgForward,msgBackward...
+}
+function setStop(thisButton, obj) {
+    thisButton.className = "passive";
+    sendMessage(obj); //new msgStopId(id)...
 }
 
 
 
-////////////// space and arrow keys won't scroll the page:
+////////////////// space and arrow keys won't scroll the page:
 window.addEventListener("keydown", function (e) {
     if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
