@@ -1,13 +1,22 @@
-var mouseoverHandler = function (e) { hover(e) };
+window.onload = function () {
+    initButtonsControlDefault();
+    initKeysControlDefault();
+    initToggleButton();
+}
+
+
+/********************** GLOBAL VARIABLES **********************/
+
+var mouseOverHandler = function (e) { hover(e) };
 var mouseDownHandler = function (e) { pressLMB(e) };
 var mouseUpOrOutHandler = function (e) { releaseLMB(e) };
 var clickSwitchHandler = function (e) { clickLMB(e) };
 
-var keydownHandler = function (e) { keyOn(e) };
-var keyupHandler = function (e) { keyOff(e) };
+var keyDownHandler = function (e) { keyOn(e) };
+var keyUpHandler = function (e) { keyOff(e) };
 var keySwitchHandler = function (e) { keySwitch(e) };
 
-
+/******** AUTH-MESSAGE CONSTANTS ********/
 const msgGreeting = {
     type: "auth",
     value: "greeting",
@@ -23,7 +32,7 @@ const msgError = {
     value: "error",
     timeStamp: new Date().toLocaleString()
 };
-/******************/
+/****** CONTROL-MESSAGE CONSTANTS ******/
 const msgForward = {
     type: "control",
     value: "F",
@@ -56,7 +65,7 @@ function msgStopId(id) {
 }
 
 
-
+/********************** WEBSOCKET STUFF **********************/
 const mySocket = new WebSocket('wss://echo.websocket.org/');
 mySocket.addEventListener('open', function (event) { console.log("connection is living"); mySocket.send(JSON.stringify(msgGreeting)); });
 mySocket.addEventListener('message', function (event) { console.log(event.data); });
@@ -64,19 +73,6 @@ mySocket.addEventListener('message', function (event) { console.log(event.data);
 function sendMessage(obj) {
     mySocket.send(JSON.stringify(obj))
 }
-
-
-
-/************************************************************************************************/
-/************************************************************************************************/
-window.onload = function () {
-    initButtonsControlDefault();
-    initKeysControlDefault();
-    initToggleButton();    
-}
-/************************************************************************************************/
-/************************************************************************************************/
-
 
 
 /********************** INITIALIZERS FOR CONTROLS **********************/
@@ -107,7 +103,7 @@ function initToggleButton() {
 function initButtonsControlDefault() {
     var controlButtons = document.querySelectorAll(".controller > button");
     for (var i = 0; i < controlButtons.length; i++) {
-        controlButtons[i].addEventListener("mouseover", mouseoverHandler);
+        controlButtons[i].addEventListener("mouseover", mouseOverHandler);
         controlButtons[i].addEventListener("mousedown", mouseDownHandler);
         controlButtons[i].addEventListener("mouseup", mouseUpOrOutHandler);
         controlButtons[i].addEventListener("mouseout", mouseUpOrOutHandler);
@@ -122,7 +118,7 @@ function initButtonsControlToggle() {
     for (var i = 0; i < controlButtons.length; i++) {
         controlButtons[i].addEventListener("click", clickSwitchHandler);
 
-        controlButtons[i].removeEventListener("mouseover", mouseoverHandler);
+        controlButtons[i].removeEventListener("mouseover", mouseOverHandler);
         controlButtons[i].removeEventListener("mousedown", mouseDownHandler);
         controlButtons[i].removeEventListener("mouseup", mouseUpOrOutHandler);
         controlButtons[i].removeEventListener("mouseout", mouseUpOrOutHandler);
@@ -130,19 +126,18 @@ function initButtonsControlToggle() {
 }
 
 function initKeysControlDefault() {
-    document.addEventListener("keydown", keydownHandler);
-    document.addEventListener("keyup", keyupHandler);
+    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
 
-    document.removeEventListener("keypress", keySwitchHandler);
+    document.removeEventListener("keyup", keySwitchHandler);
 }
 
 function initKeysControlToggle() {
-    document.addEventListener("keydown", keySwitchHandler);
+    document.addEventListener("keyup", keySwitchHandler);
 
-    document.removeEventListener("keydown", keydownHandler);
-    document.removeEventListener("keyup", keyupHandler);
+    document.removeEventListener("keydown", keyDownHandler);
+    document.removeEventListener("keyup", keyUpHandler);
 }
-
 
 
 /********************** MOUSE CONTROLS **********************/
@@ -203,77 +198,31 @@ function sendById(targetId) {
 }
 
 
-
 /********************** KEYBOARD CONTROLS **********************/
 
-var isKeyDown = false;
+var keysDown = [];
 
 function keyOn(e) {
     var key = e.which || e.keyCode;
-    changeState(key, false);
-    //switch (key) {
-    //    case 37: //left
-    //        document.getElementById("L").className = "active";
-    //        break;
-    //    case 38: //up
-    //        document.getElementById("F").className = "active";
-    //        break;
-    //    case 39: //right
-    //        document.getElementById("R").className = "active";
-    //        break;
-    //    case 40: //down
-    //        document.getElementById("B").className = "active";
-    //        break;
-    //}
-    //start the corresponding engine(s)
+    
+    if (keysDown.indexOf(key) < 0) {
+        changeState(key, false);
+        keysDown.push(key);
+    }
 }
 
 function keyOff(e) {
-    var key = event.which || event.keyCode;
-    changeState(key, true);
-    //switch (key) {
-    //    case 37: //left
-    //        document.getElementById("L").className = "passive";
-    //        break;
-    //    case 38: //up
-    //        document.getElementById("F").className = "passive";
-    //        break;
-    //    case 39: //right
-    //        document.getElementById("R").className = "passive";
-    //        break;
-    //    case 40: //down
-    //        document.getElementById("B").className = "passive";
-    //        break;
-    //}
-    //stop the corresponding engine(s)
+    var key = e.which || e.keyCode;
+
+    if (keysDown.indexOf(key) > -1) {
+        changeState(key, true);
+        delete keysDown[keysDown.indexOf(key)];
+    }
 }
 
 function keySwitch(e) {
     var key = e.which || e.keyCode;
     changeState(key, null);
-    //switch (key) {
-    //    case 37: //left
-    //        console.log(e.key);
-    //        var leftButton = document.getElementById("L");
-    //        leftButton.className === "active" ? leftButton.className = "passive" : leftButton.className = "active";
-    //        break;
-    //    case 38: //up
-    //        console.log(e.key);
-    //        var uptButton = document.getElementById("F");
-    //        uptButton.className === "active" ? uptButton.className = "passive" : uptButton.className = "active";
-    //        break;
-    //    case 39: //right
-    //        console.log(e.key);
-    //        var rightButton = document.getElementById("R");
-    //        rightButton.className === "active" ? rightButton.className = "passive" : rightButton.className = "active";
-    //        break;
-    //    case 40: //down
-    //        console.log(e.key);
-    //        var downButton = document.getElementById("B");
-    //        downButton.className === "active" ? downButton.className = "passive" : downButton.className = "active";
-    //        break;
-    //}
-    //start or stop the corresponding engine(s)
 }
 
 function changeState(key, boolConst) {
@@ -283,25 +232,21 @@ function changeState(key, boolConst) {
             var leftButton = document.getElementById("L");
             var lbClass = leftButton.className === "active";
             flipState(helper ? boolConst : lbClass, leftButton, msgLeft);
-            //leftButton.className === "active" ? setStop(leftButton, new msgStopId(leftButton.id)) : setStart(leftButton, msgLeft);
             break;
         case 38: //up
             var upButton = document.getElementById("F");
             var ubClass = upButton.className === "active";
             flipState(helper ? boolConst : ubClass, upButton, msgForward);
-            //upButton.className === "active" ? uptButton.className = "passive" : uptButton.className = "active";
             break;
         case 39: //right
             var rightButton = document.getElementById("R");
             var rbClass = rightButton.className === "active";
             flipState(helper ? boolConst : rbClass, rightButton, msgRight);
-            //rightButton.className === "active" ? rightButton.className = "passive" : rightButton.className = "active";
             break;
         case 40: //down
             var downButton = document.getElementById("B");
             var dbClass = downButton.className === "active";
             flipState(helper ? boolConst : dbClass, downButton, msgBackward);
-            //downButton.className === "active" ? downButton.className = "passive" : downButton.className = "active";
             break;
     }
 }
@@ -310,7 +255,7 @@ function flipState(isActive, thisButton, msgWhich) {
 }
 function setStart(thisButton, obj) {
     thisButton.className = "active";
-    sendMessage(obj); //msgForward,msgBackward...
+    sendMessage(obj); //msgForward, msgBackward, etc...
 }
 function setStop(thisButton, obj) {
     thisButton.className = "passive";
@@ -318,8 +263,7 @@ function setStop(thisButton, obj) {
 }
 
 
-
-////////////////// space and arrow keys won't scroll the page:
+/********************** KEYBOARD SCROLL DISABLED **********************/
 window.addEventListener("keydown", function (e) {
     if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
