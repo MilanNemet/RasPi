@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<meta http-equiv="refresh" content="1" />-->
     <title>RasPi</title>
     <link rel="stylesheet" type="text/css" href="Main.css">
+    <script src="dist/Chart.js"></script>
     <script src="ClientSideLogic.js"></script>
 </head>
 <body>
@@ -23,35 +23,35 @@
                 <table>
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Data Visualization:</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><img src="rpi-top-up.jpg" /></td>
                             <td>
-                                <canvas></canvas>
+                                <canvas id="x-axis-acceleration"></canvas>
                             </td>
                             <td>
-                                <canvas></canvas>
+                                <canvas id="x-axis-velocity"></canvas>
                             </td>
                         </tr>
                         <tr>
                             <td><img src="rpi-top-up.jpg" /></td>
                             <td>
-                                <canvas></canvas>
+                                <canvas id="y-axis-acceleration"></canvas>
                             </td>
                             <td>
-                                <canvas></canvas>
+                                <canvas id="y-axis-velocity"></canvas>
                             </td>
                         </tr>
                         <tr>
                             <td><img src="rpi-front.jpg" /></td>
                             <td>
-                                <canvas></canvas>
+                                <canvas id="z-axis-acceleration"></canvas>
                             </td>
                             <td>
-                                <canvas></canvas>
+                                <canvas id="z-axis-velocity"></canvas>
                             </td>
                         </tr>
                     </tbody>

@@ -1,6 +1,7 @@
 ﻿body {
     margin: 0;
     padding: 0;
+    font-family: Verdana;
 }
 
 .active {
@@ -34,7 +35,7 @@
 
 canvas {
     width: 100%;
-    height: 100%;
+    height: 25vh;
     border: 1px solid #000000;
 }
 
@@ -44,9 +45,9 @@ canvas {
 }
 
 iframe {
-    width: 450px;
-    height: 450px;
-    margin: 20px 30px 0px 10px;
+    width: 640px;
+    height: 480px;
+    margin: 10px 15px 0px 5px;
 }
 
 img {
@@ -67,5 +68,12 @@ img {
 }
 
 td {
+    vertical-align: middle;
     padding: 2px;
+}
+thead {
+    display: none;
+    margin: 0;
+    padding: 0;
+    max-width: 50%;
 }
