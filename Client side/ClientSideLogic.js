@@ -7,19 +7,27 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
 
     /********************** INCLUDE CHART.JS **********************/
 
-    var ctx = document.getElementById('x-axis-acceleration');
-
     Chart.defaults.global.elements.rectangle.borderWidth = 0;
 
-    var myChart = new Chart(ctx, {
+    var XaAcc = document.getElementById('x-axis-acceleration');
+    var XaVel = document.getElementById('x-axis-velocity');
+
+    var YaAcc = document.getElementById('y-axis-acceleration');
+    var YaVel = document.getElementById('y-axis-velocity');
+
+    var ZaAcc = document.getElementById('z-axis-acceleration');
+    var ZaVel = document.getElementById('z-axis-velocity');
+
+    /************** X-AXIS **************/
+    var XaAccChart = new Chart(XaAcc, {
         type: 'bar',
         data: {
             //labels: ['X-Axis Acceleration','x2'],
             datasets: [{
                 label: 'X-Axis Acceleration',
                 borderSkipped: true,
-                data: [6,-10],
-                backgroundColor: ['red', 'blue'],
+                data: [sdXaAcc, -20, 20],
+                backgroundColor: ['red', 'black', 'grey'],
                 barPercentage: 1.0,
                 categoryPercentage: 1.0,
                 barThickness: 'flex',
@@ -41,7 +49,264 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 },
             scales: {
                 yAxes: [{
-                    offset: false,
+                    //offset: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    offset: true,              //*
+                    gridLines: {                //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: false  //*
+                    }
+                }]
+            },
+            animation: {
+                duration: 1000
+            },
+            hover: {
+                animationDuration: 0 // duration of animations when hovering an item
+            },
+            responsiveAnimationDuration: 0 // animation duration after a resize
+        }
+    }); /*** EOC ***/
+    var XaVelChart = new Chart(XaVel, {
+        type: 'bar',
+        data: {
+            //labels: ['X-Axis Acceleration','x2'],
+            datasets: [{
+                label: 'X-Axis Acceleration',
+                borderSkipped: true,
+                data: [sdXaVel, -100, 100],
+                backgroundColor: ['pink', 'black'],
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                barThickness: 'flex',
+                maxBarThickness: 75,
+                minBarLength: 1,
+                //borderColor: ['rgba(255, 99, 132, 1)'],
+                //borderWidth: 0
+            }]
+        },
+        options: {
+            tooltips: {
+                enabled: false
+            },
+            layout: {
+                padding: 0
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    //offset: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    offset: true,              //*
+                    gridLines: {                //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: false  //*
+                    }
+                }]
+            },
+            animation: {
+                duration: 1000
+            },
+            hover: {
+                animationDuration: 0 // duration of animations when hovering an item
+            },
+            responsiveAnimationDuration: 0 // animation duration after a resize
+        }
+    });
+    /************** Y-AXIS **************/
+    var YaAccChart = new Chart(YaAcc, {
+        type: 'horizontalBar',
+        data: {
+            //labels: ['X-Axis Acceleration','x2'],
+            datasets: [{
+                label: 'X-Axis Acceleration',
+                borderSkipped: true,
+                data: [sdYaAcc, -20, 20],
+                backgroundColor: ['green', 'black'],
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                barThickness: 'flex',
+                maxBarThickness: 50,
+                minBarLength: 1,
+                //borderColor: ['rgba(255, 99, 132, 1)'],
+                //borderWidth: 0
+            }]
+        },
+        options: {
+            tooltips: {
+                enabled: false
+            },
+            layout: {
+                padding: 0
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    //offset: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    offset: true,              //*
+                    gridLines: {                //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: false  //*
+                    }
+                }]
+            },
+            animation: {
+                duration: 1000
+            },
+            hover: {
+                animationDuration: 0 // duration of animations when hovering an item
+            },
+            responsiveAnimationDuration: 0 // animation duration after a resize
+        }
+    }); /*** EOC ***/
+    var YaVelChart = new Chart(YaVel, {
+        type: 'horizontalBar',
+        data: {
+            //labels: ['X-Axis Acceleration','x2'],
+            datasets: [{
+                label: 'X-Axis Acceleration',
+                borderSkipped: true,
+                data: [sdYaVel, -100, 100],
+                backgroundColor: ['LightGreen ', 'black'],
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                barThickness: 'flex',
+                maxBarThickness: 50,
+                minBarLength: 1,
+                //borderColor: ['rgba(255, 99, 132, 1)'],
+                //borderWidth: 0
+            }]
+        },
+        options: {
+            tooltips: {
+                enabled: false
+            },
+            layout: {
+                padding: 0
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    //offset: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    offset: true,              //*
+                    gridLines: {                //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: false  //*
+                    }
+                }]
+            },
+            animation: {
+                duration: 1000
+            },
+            hover: {
+                animationDuration: 0 // duration of animations when hovering an item
+            },
+            responsiveAnimationDuration: 0 // animation duration after a resize
+        }
+    });
+    /************** Z-AXIS **************/
+    var ZaAccChart = new Chart(ZaAcc, {
+        type: 'bar',
+        data: {
+            //labels: ['X-Axis Acceleration','x2'],
+            datasets: [{
+                label: 'X-Axis Acceleration',
+                borderSkipped: true,
+                data: [this.sdZaAcc, -20, 20],
+                backgroundColor: ['blue', 'black'],
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                barThickness: 'flex',
+                maxBarThickness: 75,
+                minBarLength: 1,
+                //borderColor: ['rgba(255, 99, 132, 1)'],
+                //borderWidth: 0
+            }]
+        },
+        options: {
+            tooltips: {
+                enabled: false
+            },
+            layout: {
+                padding: 0
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    //offset: false,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                xAxes: [{
+                    offset: true,              //*
+                    gridLines: {                //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: true  //*
+                    }
+                }]
+            },
+            animation: {
+                duration: 1000
+            },
+            hover: {
+                animationDuration: 0 // duration of animations when hovering an item
+            },
+            responsiveAnimationDuration: 0 // animation duration after a resize
+        }
+    }); /*** EOC ***/
+    var ZaVelChart = new Chart(ZaVel, {
+        type: 'bar',
+        data: {
+            //labels: ['X-Axis Acceleration','x2'],
+            datasets: [{
+                label: 'X-Axis Acceleration',
+                borderSkipped: true,
+                data: [this.sdZaVel, -100, 100],
+                backgroundColor: ['LightBlue ', 'black'],
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                barThickness: 'flex',
+                maxBarThickness: 75,
+                minBarLength: 1,
+                //borderColor: ['rgba(255, 99, 132, 1)'],
+                //borderWidth: 0
+            }]
+        },
+        options: {
+            tooltips: {
+                enabled: false
+            },
+            layout: {
+                padding: 0
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    //offset: false,
                     ticks: {
                         beginAtZero: true
                     }
@@ -62,11 +327,57 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
             responsiveAnimationDuration: 0 // animation duration after a resize
         }
     });
+
+    // TEST RUN
+    allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
+    setInterval(function () { updateChartByMutating(allCharts) }, 200);
+}
+/************ TEST RUN FUNCTIONS ************/
+function updateChartByMutating(charts) {
+    sdXaAcc = generateRandomSigned();
+    sdXaVel += sdXaAcc;
+    sdYaAcc = generateRandomSigned();
+    sdYaVel += sdYaAcc;
+    sdZaAcc = generateRandomSigned();
+    sdZaVel += sdZaAcc;
+
+    var sensorData = [sdXaAcc, sdXaVel, sdYaAcc, sdYaVel, sdZaAcc, sdZaVel];
+
+    for (var i = 0; i < charts.length; i++) {
+
+        charts[i].data.datasets[0].data.pop();
+        charts[i].data.datasets[0].data.pop();
+        charts[i].data.datasets[0].data.pop();
+        charts[i].data.datasets[0].data.push(sensorData[i]);
+        charts[i].data.datasets[0].data.push(-100); //setterNeg
+        charts[i].data.datasets[0].data.push(100); //setterPos
+
+        charts[i].update(10);
+    }
+}
+function generateRandomSigned() {
+    var number = Math.floor(Math.random() * 20);
+    if (Math.random() < 0.5) {
+        number *= -1;
+    }
+    return number
 }
 
 
 /********************** GLOBAL VARIABLES **********************/
 
+/******** SENSOR DATA CONTAINER ********/
+var sdXaAcc = 0;
+var sdXaVel = 0;
+
+var sdYaAcc = 0;
+var sdYaVel = 0;
+
+var sdZaAcc = 0;
+var sdZaVel = 0;
+
+
+/******** EVENT HANDLER REFERENCES ********/
 var mouseOverHandler = function (e) { hover(e) };
 var mouseDownHandler = function (e) { pressLMB(e) };
 var mouseUpOrOutHandler = function (e) { releaseLMB(e) };
@@ -134,14 +445,6 @@ function sendMessage(obj) {
     mySocket.send(JSON.stringify(obj))
 }
 
-var sdXaAcc = 0;
-var sdXaVel = 0;
-
-var sdYaAcc = 0;
-var sdYaVel = 0;
-
-var sdZaAcc = 0;
-var sdZaVel = 0;
 
 /********************** INITIALIZERS FOR CONTROLS **********************/
 
