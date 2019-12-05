@@ -38,6 +38,9 @@ canvas {
     height: 25vh;
     border: 1px solid #000000;
 }
+#x-axis-acceleration {
+    border: 0;
+}
 
 .container {
     max-width: 1400px;

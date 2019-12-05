@@ -8,40 +8,58 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
     /********************** INCLUDE CHART.JS **********************/
 
     var ctx = document.getElementById('x-axis-acceleration');
+
+    Chart.defaults.global.elements.rectangle.borderWidth = 0;
+
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            //labels: ['X-Axis Acceleration','x2'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                label: 'X-Axis Acceleration',
+                borderSkipped: true,
+                data: [6,-10],
+                backgroundColor: ['red', 'blue'],
+                barPercentage: 1.0,
+                categoryPercentage: 1.0,
+                barThickness: 'flex',
+                maxBarThickness: 75,
+                minBarLength: 1,
+                //borderColor: ['rgba(255, 99, 132, 1)'],
+                //borderWidth: 0
             }]
         },
         options: {
+            tooltips: {
+                enabled: false
+            },
+            layout: {
+                padding: 0
+            },
+            legend: {
+                display: false,
+                },
             scales: {
                 yAxes: [{
+                    offset: false,
                     ticks: {
                         beginAtZero: true
                     }
+                }],
+                xAxes: [{
+                    offset: true,              //*
+                    gridLines: {                //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: true  //*
+                    }
                 }]
-            }
+            },
+            animation: {
+                duration: 1000
+            },
+            hover: {
+                animationDuration: 0 // duration of animations when hovering an item
+            },
+            responsiveAnimationDuration: 0 // animation duration after a resize
         }
     });
 }
