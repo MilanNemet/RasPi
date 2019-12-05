@@ -106,7 +106,7 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,              //*
+                    offset: true,               //*
                     gridLines: {                //* ezekkel még érdemes lehet játszani
                         offsetGridLines: false  //*
                     }
@@ -158,7 +158,7 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,              //*
+                    offset: false,              //*
                     gridLines: {                //* ezekkel még érdemes lehet játszani
                         offsetGridLines: false  //*
                     }
@@ -209,7 +209,7 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,              //*
+                    offset: false,              //*
                     gridLines: {                //* ezekkel még érdemes lehet játszani
                         offsetGridLines: false  //*
                     }
@@ -306,7 +306,10 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
             },
             scales: {
                 yAxes: [{
-                    //offset: false,
+                    offset: false,              //*
+                    gridLines: {               //* ezekkel még érdemes lehet játszani
+                        offsetGridLines: false  //*
+                    },
                     ticks: {
                         beginAtZero: true
                     }
@@ -329,8 +332,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
     });
 
     // TEST RUN
-    allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
-    setInterval(function () { updateChartByMutating(allCharts) }, 200);
+    var allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
+    setInterval(function () { updateChartByMutating(allCharts) }, 666);
+    //setInterval(function () { setTimeout(function () { updateChartByMutating(allCharts) }, Math.random()*1000) }, 100);
 }
 /************ TEST RUN FUNCTIONS ************/
 function updateChartByMutating(charts) {
@@ -349,10 +353,10 @@ function updateChartByMutating(charts) {
         charts[i].data.datasets[0].data.pop();
         charts[i].data.datasets[0].data.pop();
         charts[i].data.datasets[0].data.push(sensorData[i]);
-        charts[i].data.datasets[0].data.push(-100); //setterNeg
-        charts[i].data.datasets[0].data.push(100); //setterPos
+        charts[i].data.datasets[0].data.push(-25); //setterNeg
+        charts[i].data.datasets[0].data.push(25); //setterPos
 
-        charts[i].update(10);
+        charts[i].update(144);
     }
 }
 function generateRandomSigned() {
