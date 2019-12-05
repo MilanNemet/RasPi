@@ -306,10 +306,7 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
             },
             scales: {
                 yAxes: [{
-                    offset: false,              //*
-                    gridLines: {               //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: false  //*
-                    },
+                    //offset: false,
                     ticks: {
                         beginAtZero: true
                     }
@@ -331,10 +328,10 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
         }
     });
 
-    // TEST RUN
+    ////////// TEST RUN:
     var allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
     setInterval(function () { updateChartByMutating(allCharts) }, 666);
-    //setInterval(function () { setTimeout(function () { updateChartByMutating(allCharts) }, Math.random()*1000) }, 100);
+    //setInterval(function () { setTimeout(function () { updateChartByMutating(allCharts) }, Math.random()*1000) }, 100); //same with random timer
 }
 /************ TEST RUN FUNCTIONS ************/
 function updateChartByMutating(charts) {
