@@ -650,6 +650,7 @@ window.addEventListener("keydown", function (e) {
     if (e.ctrlKey && e.altKey && e.keyCode == 66 && document.body.style.backgroundColor == "white") {
         document.body.style.color = "white";
         document.body.style.backgroundColor = "black";
+        document.getElementsByTagName("TH")[0].style.color = "black";
     }
     else if (e.ctrlKey && e.altKey && e.keyCode == 66) {
         document.body.style.color = "black";
