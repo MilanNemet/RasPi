@@ -639,11 +639,20 @@ function setStop(thisButton, obj) {
 
 
 /********************** KEYBOARD SCROLL DISABLED **********************/
-
 window.addEventListener("keydown", function (e) {
     if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault();
     }
 }, false);
 
-
+/*********************** FLIP LIGHT-DARK STYLE ***********************/
+window.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && e.altKey && e.keyCode == 66 && document.body.style.backgroundColor == "white") {
+        document.body.style.color = "white";
+        document.body.style.backgroundColor = "black";
+    }
+    else if (e.ctrlKey && e.altKey && e.keyCode == 66) {
+        document.body.style.color = "black";
+        document.body.style.backgroundColor = "white";
+    }
+}, false);
