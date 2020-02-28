@@ -393,50 +393,50 @@ var keySwitchHandler = function (e) { keySwitch(e) };
 
 /******** AUTH-MESSAGE CONSTANTS ********/
 const msgGreeting = {
-    type: "auth",
-    value: "greeting",
-    timeStamp: new Date().toLocaleString()
+    Type: "auth",
+    Value: "greeting",
+    TimeStamp: new Date()
 };
 const msgGoodbye = {
-    type: "auth",
-    value: "goodbye",
-    timeStamp: new Date().toLocaleString()
+    Type: "auth",
+    Value: "goodbye",
+    TimeStamp: new Date()
 };
 const msgError = {
-    type: "auth",
-    value: "error",
-    timeStamp: new Date().toLocaleString()
+    Type: "auth",
+    Value: "error",
+    TimeStamp: new Date()
 };
 /****** CONTROL-MESSAGE CONSTANTS ******/
 const msgForward = {
-    type: "control",
-    value: "F",
-    timeStamp: new Date().toLocaleString()
+    Type: "control",
+    Value: "F",
+    TimeStamp: new Date()
 };
 const msgBackward = {
-    type: "control",
-    value: "B",
-    timeStamp: new Date().toLocaleString()
+    Type: "control",
+    Value: "B",
+    TimeStamp: new Date()
 };
 const msgLeft = {
-    type: "control",
-    value: "L",
-    timeStamp: new Date().toLocaleString()
+    Type: "control",
+    Value: "L",
+    TimeStamp: new Date()
 };
 const msgRight = {
-    type: "control",
-    value: "R",
-    timeStamp: new Date().toLocaleString()
+    Type: "control",
+    Value: "R",
+    TimeStamp: new Date()
 };
 const msgStopAll = {
-    type: "control",
-    value: "S",
-    timeStamp: new Date().toLocaleString()
+    Type: "control",
+    Value: "S",
+    TimeStamp: new Date()
 };
 function msgStopId(id) {
-    this.type = "control";
-    this.value = "S"+id;
-    this.timeStamp = new Date().toLocaleString();
+    this.Type = "control";
+    this.Value = "S"+id;
+    this.TimeStamp = new Date();
 }
 
 
