@@ -441,7 +441,7 @@ function msgStopId(id) {
 
 
 /********************** WEBSOCKET STUFF **********************/
-const mySocket = new WebSocket('wss://echo.websocket.org/');
+const mySocket = new WebSocket('ws://79.172.214.20/websocket/');
 mySocket.addEventListener('open', function (event) { console.log("Connection successful: " + mySocket.url); mySocket.send(JSON.stringify(msgGreeting)); });
 mySocket.addEventListener('message', function (event) { console.log(event.data); });
 
