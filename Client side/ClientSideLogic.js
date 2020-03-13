@@ -9,17 +9,17 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
 
     Chart.defaults.global.elements.rectangle.borderWidth = 0;
 
-    var XaAcc = document.getElementById('x-axis-acceleration');
-    var XaVel = document.getElementById('x-axis-velocity');
+    XaAcc = document.getElementById('x-axis-acceleration');
+    XaVel = document.getElementById('x-axis-velocity');
 
-    var YaAcc = document.getElementById('y-axis-acceleration');
-    var YaVel = document.getElementById('y-axis-velocity');
+    YaAcc = document.getElementById('y-axis-acceleration');
+    YaVel = document.getElementById('y-axis-velocity');
 
-    var ZaAcc = document.getElementById('z-axis-acceleration');
-    var ZaVel = document.getElementById('z-axis-velocity');
+    ZaAcc = document.getElementById('z-axis-acceleration');
+    ZaVel = document.getElementById('z-axis-velocity');
 
     /************** X-AXIS **************/
-    var XaAccChart = new Chart(XaAcc, {
+    XaAccChart = new Chart(XaAcc, {
         type: 'bar',
         data: {
             labels: ['m/s\xB2'],
@@ -47,7 +47,6 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 },
             scales: {
                 yAxes: [{
-                    //offset: false,
                     ticks: {
                         beginAtZero: true,
                         max: 50,
@@ -56,9 +55,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,              //*
-                    gridLines: {                //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: false  //*
+                    offset: true,
+                    gridLines: { 
+                        offsetGridLines: false
                     }
                 }]
             },
@@ -66,12 +65,13 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 duration: 1000
             },
             hover: {
-                animationDuration: 0 // duration of animations when hovering an item
+                animationDuration: 0
             },
-            responsiveAnimationDuration: 0 // animation duration after a resize
+            responsiveAnimationDuration: 0
         }
-    }); /*** EOC ***/
-    var XaVelChart = new Chart(XaVel, {
+    });
+    /*** EOC ***/
+    XaVelChart = new Chart(XaVel, {
         type: 'bar',
         data: {
             labels: ['m/s'],
@@ -85,8 +85,6 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 barThickness: 'flex',
                 maxBarThickness: 50,
                 minBarLength: 1,
-                //borderColor: ['rgba(255, 99, 132, 1)'],
-                //borderWidth: 0
             }]
         },
         options: {
@@ -101,7 +99,6 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
             },
             scales: {
                 yAxes: [{
-                    //offset: false,
                     ticks: {
                         beginAtZero: true,
                         max: 50,
@@ -110,23 +107,20 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,               //*
-                    gridLines: {                //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: false  //*
+                    offset: true, 
+                    gridLines: { 
+                        offsetGridLines: false 
                     }
                 }]
             },
-            //animation: {
-            //    duration: 1000
-            //},
             hover: {
-                animationDuration: 0 // duration of animations when hovering an item
+                animationDuration: 0 
             },
-            responsiveAnimationDuration: 0 // animation duration after a resize
+            responsiveAnimationDuration: 0 
         }
     });
     /************** Y-AXIS **************/
-    var YaAccChart = new Chart(YaAcc, {
+    YaAccChart = new Chart(YaAcc, {
         type: 'horizontalBar',
         data: {
             labels: ['m/s\xB2'],
@@ -140,8 +134,6 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 barThickness: 'flex',
                 maxBarThickness: 30,
                 minBarLength: 1,
-                //borderColor: ['rgba(255, 99, 132, 1)'],
-                //borderWidth: 0
             }]
         },
         options: {
@@ -159,9 +151,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
 
                 }],
                 xAxes: [{
-                    offset: false,              //*
-                    gridLines: {                //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: false  //*
+                    offset: false, 
+                    gridLines: { 
+                        offsetGridLines: false 
                     },
                     ticks: {
                         beginAtZero: true,
@@ -175,12 +167,13 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 duration: 1000
             },
             hover: {
-                animationDuration: 0 // duration of animations when hovering an item
+                animationDuration: 0 
             },
-            responsiveAnimationDuration: 0 // animation duration after a resize
+            responsiveAnimationDuration: 0 
         }
-    }); /*** EOC ***/
-    var YaVelChart = new Chart(YaVel, {
+    });
+    /*** EOC ***/
+    YaVelChart = new Chart(YaVel, {
         type: 'horizontalBar',
         data: {
             labels: ['m/s'],
@@ -194,8 +187,6 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 barThickness: 'flex',
                 maxBarThickness: 30,
                 minBarLength: 1,
-                //borderColor: ['rgba(255, 99, 132, 1)'],
-                //borderWidth: 0
             }]
         },
         options: {
@@ -213,9 +204,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     
                 }],
                 xAxes: [{
-                    offset: false,              //*
-                    gridLines: {                //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: false  //*
+                    offset: false, 
+                    gridLines: { 
+                        offsetGridLines: false 
                     },
                     ticks: {
                         beginAtZero: true,
@@ -229,13 +220,13 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 duration: 1000
             },
             hover: {
-                animationDuration: 0 // duration of animations when hovering an item
+                animationDuration: 0 
             },
-            responsiveAnimationDuration: 0 // animation duration after a resize
+            responsiveAnimationDuration: 0 
         }
     });
     /************** Z-AXIS **************/
-    var ZaAccChart = new Chart(ZaAcc, {
+    ZaAccChart = new Chart(ZaAcc, {
         type: 'bar',
         data: {
             labels: ['m/s\xB2'],
@@ -271,9 +262,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,              //*
-                    gridLines: {                //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: true  //*
+                    offset: true, 
+                    gridLines: { 
+                        offsetGridLines: true 
                     }
                 }]
             },
@@ -281,12 +272,13 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 duration: 1000
             },
             hover: {
-                animationDuration: 0 // duration of animations when hovering an item
+                animationDuration: 0 
             },
-            responsiveAnimationDuration: 0 // animation duration after a resize
+            responsiveAnimationDuration: 0 
         }
-    }); /*** EOC ***/
-    var ZaVelChart = new Chart(ZaVel, {
+    });
+    /*** EOC ***/
+    ZaVelChart = new Chart(ZaVel, {
         type: 'bar',
         data: {
             labels: ['m/s'],
@@ -322,9 +314,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     }
                 }],
                 xAxes: [{
-                    offset: true,              //*
-                    gridLines: {                //* ezekkel még érdemes lehet játszani
-                        offsetGridLines: true  //*
+                    offset: true, 
+                    gridLines: { 
+                        offsetGridLines: true 
                     }
                 }]
             },
@@ -332,35 +324,47 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 duration: 1000
             },
             hover: {
-                animationDuration: 0 // duration of animations when hovering an item
+                animationDuration: 0 
             },
-            responsiveAnimationDuration: 0 // animation duration after a resize
+            responsiveAnimationDuration: 0 
         }
     });
 
-    ////////// TEST RUN:
-    var allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
-    //setInterval(function () { updateChartByMutating(allCharts) }, 200);
-    setInterval(function () { setTimeout(function () { updateChartByMutating(allCharts) }, 200+Math.random()*1000) }, 200); //same with random timer
-}
-/************ TEST RUN FUNCTIONS ************/
-function updateChartByMutating(charts) {
-    sdXaAcc = generateRandomSigned();
-    sdXaVel += sdXaAcc * 0.2;
-    sdYaAcc = generateRandomSigned();
-    sdYaVel += sdYaAcc * 0.2;
-    sdZaAcc = generateRandomSigned();
-    sdZaVel += sdZaAcc * 0.2;
+    allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
 
-    var sensorData = [sdXaAcc, sdXaVel, sdYaAcc, sdYaVel, sdZaAcc, sdZaVel];
+    ////////// TEST RUN:
+    setInterval(
+        function () {
+            var dataArray = [
+                GenerateRandomSigned(),
+                GenerateRandomSigned(),
+                GenerateRandomSigned(),
+                GenerateRandomSigned(),
+                GenerateRandomSigned(),
+                GenerateRandomSigned()
+            ];
+            sendWsMessage(dataArray);
+        },
+        2000
+    );
+    //// End Of Main
+}
+
+function updateChartsByMutating(charts, sdata) {
+
+    if (charts == null || sdata == null) {
+        return;
+    }
 
     for (var i = 0; i < charts.length; i++) {
-        charts[i].data.datasets[0].data[0] = sensorData[i];
+        charts[i].data.datasets[0].data[0] = sdata[i];
         charts[i].update(200);
     }
 }
-function generateRandomSigned() {
-    var number = Math.floor(Math.random() * 20);
+
+/************ TEST RUN FUNCTION ************/
+function GenerateRandomSigned() {
+    var number = Math.random() * 20;
     if (Math.random() < 0.5) {
         number *= -1;
     }
@@ -370,16 +374,29 @@ function generateRandomSigned() {
 
 /********************** GLOBAL VARIABLES **********************/
 
-/******** SENSOR DATA CONTAINER ********/
-var sdXaAcc = 0;
-var sdXaVel = 0;
+/******** SENSOR DATA RELATED VARIABLES ********/
+var XaAcc; //
+var XaVel; //
+var YaAcc; //   canvas containers
+var YaVel; //   by "id"
+var ZaAcc; //
+var ZaVel; //
 
-var sdYaAcc = 0;
-var sdYaVel = 0;
+var sdXaAcc = 0; //
+var sdXaVel = 0; //
+var sdYaAcc = 0; //   sensor data
+var sdYaVel = 0; //   values
+var sdZaAcc = 0; //
+var sdZaVel = 0; //
 
-var sdZaAcc = 0;
-var sdZaVel = 0;
+var XaAccChart; //
+var XaVelChart; // 
+var YaAccChart; //  Chart.JS
+var YaVelChart; //  Objects
+var ZaAccChart; //
+var ZaVelChart; //
 
+var allCharts; //   chart container: array<object>
 
 /******** EVENT HANDLER REFERENCES ********/
 var mouseOverHandler = function (e) { hover(e) };
@@ -441,11 +458,20 @@ function msgStopId(id) {
 
 
 /********************** WEBSOCKET STUFF **********************/
-const mySocket = new WebSocket('ws://79.172.214.20/websocket/');
-mySocket.addEventListener('open', function (event) { console.log("Connection successful: " + mySocket.url); mySocket.send(JSON.stringify(msgGreeting)); });
-mySocket.addEventListener('message', function (event) { console.log(event.data); });
+const mySocket = new WebSocket('ws://echo.websocket.org');          // test server
+//const mySocket = new WebSocket('ws://79.172.214.20/websocket/');  // live server
 
-function sendMessage(obj) {
+mySocket.addEventListener('open', function (event) {
+    console.log("Connection successful: " + mySocket.url);
+    mySocket.send(JSON.stringify(msgGreeting));
+});
+
+mySocket.addEventListener('message', function (event) {
+    console.log(event.data);
+    updateChartsByMutating(allCharts, JSON.parse(event.data));
+});
+
+function sendWsMessage(obj) {
     mySocket.send(JSON.stringify(obj))
 }
 
@@ -534,7 +560,7 @@ function releaseLMB(e) {
     if (isMouseDown) { //only take the action if LMB is under pressure(important for mouseout event)
         e.target.className = "passive";
         //stop the engine(s):
-        sendMessage(msgStopAll);
+        sendWsMessage(msgStopAll);
     }
     isMouseDown = false;
 }
@@ -544,7 +570,7 @@ function clickLMB(e) {
     if (target.className === "active") {
         target.className = "passive";
         //stop the corresponding engine(s):
-        sendMessage(new msgStopId(target.id));
+        sendWsMessage(new msgStopId(target.id));
     }
     else {
         target.className = "active";
@@ -556,19 +582,19 @@ function clickLMB(e) {
 function sendById(targetId) {
     switch (targetId) {
         case "F":
-            sendMessage(msgForward);
+            sendWsMessage(msgForward);
             break;
         case "B":
-            sendMessage(msgBackward);
+            sendWsMessage(msgBackward);
             break;
         case "L":
-            sendMessage(msgLeft);
+            sendWsMessage(msgLeft);
             break;
         case "R":
-            sendMessage(msgRight);
+            sendWsMessage(msgRight);
             break;
         default:
-            sendMessage(msgError);
+            sendWsMessage(msgError);
     }
 }
 
@@ -600,28 +626,28 @@ function keySwitch(e) {
     changeState(key, null);
 }
 
-function changeState(key, boolConst) {
-    var helper = boolConst != null;
+function changeState(key, optionParam) {
+    var helper = optionParam != null;
     switch (key) {
         case 37: //left
             var leftButton = document.getElementById("L");
             var lbClass = leftButton.className === "active";
-            flipState(helper ? boolConst : lbClass, leftButton, msgLeft);
+            flipState(helper ? optionParam : lbClass, leftButton, msgLeft);
             break;
         case 38: //up
             var upButton = document.getElementById("F");
             var ubClass = upButton.className === "active";
-            flipState(helper ? boolConst : ubClass, upButton, msgForward);
+            flipState(helper ? optionParam : ubClass, upButton, msgForward);
             break;
         case 39: //right
             var rightButton = document.getElementById("R");
             var rbClass = rightButton.className === "active";
-            flipState(helper ? boolConst : rbClass, rightButton, msgRight);
+            flipState(helper ? optionParam : rbClass, rightButton, msgRight);
             break;
         case 40: //down
             var downButton = document.getElementById("B");
             var dbClass = downButton.className === "active";
-            flipState(helper ? boolConst : dbClass, downButton, msgBackward);
+            flipState(helper ? optionParam : dbClass, downButton, msgBackward);
             break;
     }
 }
@@ -630,11 +656,11 @@ function flipState(isActive, thisButton, msgWhich) {
 }
 function setStart(thisButton, obj) {
     thisButton.className = "active";
-    sendMessage(obj); //msgForward, msgBackward, etc...
+    sendWsMessage(obj); //msgForward, msgBackward, etc...
 }
 function setStop(thisButton, obj) {
     thisButton.className = "passive";
-    sendMessage(obj); //new msgStopId(id)...
+    sendWsMessage(obj); //new msgStopId(id)...
 }
 
 
@@ -645,7 +671,7 @@ window.addEventListener("keydown", function (e) {
     }
 }, false);
 
-/*********************** FLIP LIGHT-DARK STYLE ***********************/
+/*********************** FLIP LIGHT-DARK THEME ***********************/
 window.addEventListener("keydown", function (e) {
     if (e.ctrlKey && e.altKey && e.keyCode == 66 && document.body.style.backgroundColor == "white") {
         document.body.style.color = "white";
