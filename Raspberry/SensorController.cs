@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using WebSocketSharp;
+using System.Threading;
 
 namespace RasPi
 {
@@ -15,7 +16,8 @@ namespace RasPi
     {
         static string localHost = ConfigurationManager.AppSettings["UdpAddress"];
         static int port = int.Parse(ConfigurationManager.AppSettings["UdpPort"]);
-
+        static bool terminate = false;
+        
         private UdpClient RemoteUdpClient;
         private IPEndPoint RemoteIpEndPoint;
         public WebSocket WS { get; set; }
@@ -28,7 +30,7 @@ namespace RasPi
 
         public void StartTransmission()
         {
-            while (true)
+            while (!terminate)
             {
                 try
                 {
@@ -62,6 +64,8 @@ namespace RasPi
 
         public void Dispose()
         {
+            terminate = true;
+            Thread.Sleep(100);
             RemoteUdpClient.Dispose();
         }
     }
