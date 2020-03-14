@@ -10,13 +10,6 @@ namespace RasPi
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Waiting for debugger attach.\n");
-            while (true)
-            {
-                if (Debugger.IsAttached) break;
-                Console.Write("█");
-                Thread.Sleep(200);
-            }
             //string js1 = "{\"Type\":\"control\",\"Value\":\"SL\",\"TimeStamp\":\"2020-02-28T17:29:34.486Z\"}";
             //string js2 = "{\"Type\":\"control\",\"Value\":\"SF\",\"TimeStamp\":\"2020-02-28T17:42:53.512Z\"}";
 
