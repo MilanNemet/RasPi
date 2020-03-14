@@ -14,7 +14,7 @@ namespace RasPi
             InitContext(motorController, sensorController);
         }
 
-        public WebSocket WS { get; private set; }
+        static public WebSocket WS { get; private set; }
 
         void InitContext(MotorController motorController, SensorController sensorController)
         {
