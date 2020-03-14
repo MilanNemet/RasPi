@@ -74,6 +74,11 @@ namespace RasPi
                         Thread.Sleep(1000);
                     }
                 }
+                finally
+                {
+                    motorController.Dispose();
+                    sensorController.Dispose();
+                }
             }
         }
     }
