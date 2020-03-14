@@ -14,35 +14,38 @@ namespace RasPi
             InitContext(motorController, sensorController);
         }
 
+        public WebSocket WS { get; private set; }
+
         void InitContext(MotorController motorController, SensorController sensorController)
         {
-            using (var ws = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]))
+            WS = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
+            try
             {
-                ws.OnOpen += (sender, e) =>
+                WS.OnOpen += (sender, e) =>
                 {
                     Console.WriteLine("WS OPEN");
                 };
-                ws.OnError += (sender, e) =>
+                WS.OnError += (sender, e) =>
                 {
                     Console.WriteLine("WS ERROR");
-                    if (!ws.IsAlive)
+                    if (!WS.IsAlive)
                     {
-                        StartConnecting(ws); 
+                        StartConnecting(WS); 
                     }
                 };
-                ws.OnClose += (sender, e) =>
+                WS.OnClose += (sender, e) =>
                 {
                     Console.WriteLine("WS CLOSED");
                 };
-                ws.OnMessage += (sender, e) =>
+                WS.OnMessage += (sender, e) =>
                 {
                     Console.WriteLine(e.Data);
                 };
-                ws.OnMessage += motorController.HandleCommand;
+                WS.OnMessage += motorController.HandleCommand;
 
-                StartConnecting(ws);
+                StartConnecting(WS);
 
-                sensorController.WS = ws;
+                sensorController.WS = WS;
                 var senderThread = new Thread(sensorController.StartTransmission);
                 senderThread.IsBackground = true;
                 senderThread.Start();
@@ -51,9 +54,18 @@ namespace RasPi
                 while (str != "exit")
                 {
                     str = Console.ReadLine();
-                    ws.Send(str);
+                    WS.Send(str);
                 }
                 Thread.Sleep(500);
+                
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                WS.Close();
                 motorController.Dispose();
                 sensorController.Dispose();
             }
