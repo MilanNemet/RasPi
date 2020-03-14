@@ -54,10 +54,13 @@ namespace RasPi
                     //                            ":" +
                     //                            RemoteIpEndPoint.Port.ToString());
                 }
-                catch (Exception e)
+                catch
                 {
-                    Console.WriteLine(e.ToString());
                     throw;
+                }
+                finally
+                {
+                    Dispose();
                 }
             }
         }
