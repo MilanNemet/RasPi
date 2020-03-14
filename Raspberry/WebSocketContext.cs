@@ -14,11 +14,10 @@ namespace RasPi
             InitContext(motorController, sensorController);
         }
 
-        static public WebSocket WS { get; private set; }
+        static private WebSocket WS { get; set; } = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
 
         void InitContext(MotorController motorController, SensorController sensorController)
         {
-            WS = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
             try
             {
                 WS.OnOpen += (sender, e) =>
@@ -28,10 +27,6 @@ namespace RasPi
                 WS.OnError += (sender, e) =>
                 {
                     Console.WriteLine("WS ERROR");
-                    if (!WS.IsAlive)
-                    {
-                        StartConnecting(WS); 
-                    }
                 };
                 WS.OnClose += (sender, e) =>
                 {
@@ -43,7 +38,7 @@ namespace RasPi
                 };
                 WS.OnMessage += motorController.HandleCommand;
 
-                StartConnecting(WS);
+                StartConnecting();
 
                 sensorController.WS = WS;
                 var senderThread = new Thread(sensorController.StartTransmission);
@@ -70,12 +65,12 @@ namespace RasPi
                 sensorController.Dispose();
             }
         }
-        static public void StartConnecting(WebSocket ws)
+        static public void StartConnecting()
         {
-            while (!ws.IsAlive)
+            while (!WS.IsAlive)
             {
                 Console.WriteLine("WS CONNECTING...");
-                ws.Connect();
+                WS.Connect();
             }
         }
     }
