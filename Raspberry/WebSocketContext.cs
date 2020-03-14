@@ -9,6 +9,9 @@ namespace RasPi
 {
     class WebSocketContext
     {
+        private bool _notFinished = true;
+        private byte _attempts = 0;
+
         public WebSocketContext(MotorController motorController, SensorController sensorController)
         {
             InitContext(motorController, sensorController);
@@ -16,41 +19,61 @@ namespace RasPi
 
         void InitContext(MotorController motorController, SensorController sensorController)
         {
-            using (var ws = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]))
+            while (_notFinished && _attempts < Byte.MaxValue)
             {
-                ws.OnOpen += (sender, e) =>
+                try
                 {
-                    Console.WriteLine("WS OPEN");
-                };
-                ws.OnError += (sender, e) =>
-                {
-                    Console.WriteLine("WS ERROR");
-                };
-                ws.OnClose += (sender, e) =>
-                {
-                    Console.WriteLine("WS CLOSED");
-                };
-                ws.OnMessage += (sender, e) =>
-                {
-                    Console.WriteLine(e.Data);
-                };
-                ws.OnMessage += motorController.HandleCommand;
-                ws.Connect();
+                    using (var ws = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]))
+                    {
+                        ws.OnOpen += (sender, e) =>
+                        {
+                            Console.WriteLine("WS OPEN");
+                        };
+                        ws.OnError += (sender, e) =>
+                        {
+                            Console.WriteLine("WS ERROR");
+                        };
+                        ws.OnClose += (sender, e) =>
+                        {
+                            Console.WriteLine("WS CLOSED");
+                        };
 
-                sensorController.WS = ws;
-                var senderThread = new Thread(sensorController.StartTransmission);
-                senderThread.IsBackground = true;
-                senderThread.Start();
+                        ws.OnMessage += (sender, e) =>
+                        {
+                            Console.WriteLine(e.Data);
+                        };
 
-                var str = "";
-                while (str != "exit")
-                {
-                    str = Console.ReadLine();
-                    ws.Send(str);
+                        ws.OnMessage += motorController.HandleCommand;
+                        ws.Connect();
+
+                        sensorController.WS = ws;
+                        var senderThread = new Thread(sensorController.StartTransmission);
+                        senderThread.IsBackground = true;
+                        senderThread.Start();
+
+                        var str = "";
+                        while (str != "exit")
+                        {
+                            str = Console.ReadLine();
+                            ws.Send(str);
+                        }
+                        Thread.Sleep(500);
+                        motorController.Dispose();
+                        sensorController.Dispose();
+                    }
                 }
-                Thread.Sleep(500);
-                motorController.Dispose();
-                sensorController.Dispose();
+                catch
+                {
+                    ++_attempts;
+                    //	  Console.WriteLine(e);
+                    Console.WriteLine("WebSocket failure...");
+                    Console.WriteLine("Reconnecting in 20 seconds...");
+                    for (int i = 0; i < 20; ++i)
+                    {
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                    }
+                }
             }
         }
     }
