@@ -15,6 +15,7 @@ namespace RasPi
         }
 
         static private WebSocket WS { get; set; } = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
+        static public bool Waiting { private get; set; } = true;
 
         void InitContext(MotorController motorController, SensorController sensorController)
         {
@@ -45,6 +46,10 @@ namespace RasPi
                 senderThread.IsBackground = true;
                 senderThread.Start();
 
+                while (Waiting) ;
+                RunPyScript();
+
+
                 var str = "";
                 while (str != "exit")
                 {
@@ -72,6 +77,16 @@ namespace RasPi
                 Console.WriteLine("WS CONNECTING...");
                 WS.Connect();
             }
+        }
+        private void RunPyScript()
+        {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = ConfigurationManager.AppSettings["ProcessName"];
+            startInfo.Arguments = ConfigurationManager.AppSettings["ProcessArgs"];
+            process.StartInfo = startInfo;
+            process.Start();
         }
     }
 }
