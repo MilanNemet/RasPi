@@ -25,6 +25,7 @@ namespace RasPi
                 ws.OnError += (sender, e) =>
                 {
                     Console.WriteLine("WS ERROR");
+                    StartConnecting(ws);
                 };
                 ws.OnClose += (sender, e) =>
                 {
@@ -54,7 +55,7 @@ namespace RasPi
                 sensorController.Dispose();
             }
         }
-        static void StartConnecting(WebSocket ws)
+        static public void StartConnecting(WebSocket ws)
         {
             while (!ws.IsAlive)
             {
