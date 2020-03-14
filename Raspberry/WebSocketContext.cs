@@ -25,7 +25,10 @@ namespace RasPi
                 ws.OnError += (sender, e) =>
                 {
                     Console.WriteLine("WS ERROR");
-                    StartConnecting(ws);
+                    if (!ws.IsAlive)
+                    {
+                        StartConnecting(ws); 
+                    }
                 };
                 ws.OnClose += (sender, e) =>
                 {
