@@ -39,6 +39,10 @@ namespace RasPi
 
                     //var information = JsonSerializer.Deserialize<float[]>(returnData);
 
+                    if (!WS.IsAlive)
+                    {
+                        WebSocketContext.StartConnecting(WS);
+                    }
                     WS.Send(returnData);
 
                     //Console.WriteLine("received message: \n" +
@@ -56,6 +60,7 @@ namespace RasPi
                 }
                 catch
                 {
+                    Console.WriteLine("\n\n SENSORCONTROLLER CLASS \n\n");
                     throw;
                 }
                 finally
