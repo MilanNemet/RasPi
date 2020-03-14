@@ -14,13 +14,19 @@ namespace RasPi
 {
     class SensorController:IDisposable
     {
-        static string localHost = ConfigurationManager.AppSettings["UdpAddress"];
-        static int port = int.Parse(ConfigurationManager.AppSettings["UdpPort"]);
-        static bool terminate = false;
-        
+        private string localHost = ConfigurationManager.AppSettings["UdpAddress"];
+        private int port = int.Parse(ConfigurationManager.AppSettings["UdpPort"]);
+        private bool terminate = false;
+        private uint sf = uint.Parse(ConfigurationManager.AppSettings["SendingFrequency"]);
+        private uint counter = 1;
+
         private UdpClient RemoteUdpClient;
         private IPEndPoint RemoteIpEndPoint;
         public WebSocket WS { get; set; }
+
+        private VelocityManager vmx = new VelocityManager(float.Parse(ConfigurationManager.AppSettings["MuzzleVelocity-X"]));
+        private VelocityManager vmy = new VelocityManager(float.Parse(ConfigurationManager.AppSettings["MuzzleVelocity-Y"]));
+        private VelocityManager vmz = new VelocityManager(float.Parse(ConfigurationManager.AppSettings["MuzzleVelocity-Z"]));
 
         public SensorController()
         {
@@ -34,38 +40,41 @@ namespace RasPi
             {
                 try
                 {
+                    WebSocketContext.Waiting = false;
                     Byte[] receiveBytes = RemoteUdpClient.Receive(ref RemoteIpEndPoint);
                     string returnData = Encoding.UTF8.GetString(receiveBytes);
 
-                    //var information = JsonSerializer.Deserialize<float[]>(returnData);
+                    var information = JsonSerializer.Deserialize<float[]>(returnData);
 
-                    if (!WS.IsAlive)
+                    vmx.ReCount(information[0], information[3]);
+                    vmy.ReCount(information[1], information[3]);
+                    vmz.ReCount(information[2], information[3]);
+
+                    float[] clientData = new float[] 
+                    { 
+                        information[0], information[1], information[2], 
+                        vmx.Velocity, vmy.Velocity, vmz.Velocity 
+                    };
+
+                    if (counter % sf == 0) 
                     {
-                        WebSocketContext.StartConnecting(WS);
+                        if (!WS.IsAlive)
+                        {
+                            WebSocketContext.StartConnecting();
+                        }
+                        else
+                        {
+                            string clientJson = JsonSerializer.Serialize(clientData);
+                            WS.Send(clientJson);
+                        }
+                        if (counter > 4294967000) counter = 0;
                     }
-                    WS.Send(returnData);
-
-                    //Console.WriteLine("received message: \n" +
-                    //                    "json: " + returnData.ToString() + "\n" +
-                    //                    "after processing: ");
-                    //foreach (var item in information)
-                    //{
-                    //    Console.Write(item + "\t");
-                    //}
-                    //Console.WriteLine("\n" +
-                    //                    "From -> " +
-                    //                            RemoteIpEndPoint.Address.ToString() +
-                    //                            ":" +
-                    //                            RemoteIpEndPoint.Port.ToString());
+                    ++counter;
                 }
                 catch
                 {
                     Console.WriteLine("\n\n SENSORCONTROLLER CLASS \n\n");
                     throw;
-                }
-                finally
-                {
-                    Dispose();
                 }
             }
         }
