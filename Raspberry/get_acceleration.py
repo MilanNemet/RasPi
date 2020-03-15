@@ -17,7 +17,7 @@ lis3dh = adafruit_lis3dh.LIS3DH_I2C(i2c, int1=int1)
 lis3dh.range = adafruit_lis3dh.RANGE_4_G
 
 start = time.time()
-time.sleep(0.001)
+time.sleep(2) #synchronize with caller
 
 while(True):
     try:
@@ -26,8 +26,9 @@ while(True):
         start = time.time()
         b_arr = bytearray(json.dumps(accelero_tuple).encode())
         remote_socket.sendto(b_arr, (UDP_IP, UDP_PORT))
-        time.sleep(0.001)
+        time.sleep(0.01)
     except KeyboardInterrupt:
+        print("Keyboard Interrupt!")
         break
     except :
         print("Something went wrong!")
