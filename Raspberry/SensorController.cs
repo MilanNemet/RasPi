@@ -81,9 +81,9 @@ namespace RasPi
 
         private void RunPyScript()
         {
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = ConfigurationManager.AppSettings["ProcessName"];
             startInfo.Arguments = ConfigurationManager.AppSettings["ProcessArgs"];
             process.StartInfo = startInfo;
