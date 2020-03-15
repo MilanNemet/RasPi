@@ -27,10 +27,19 @@ namespace RasPi
                 WS.OnError += (sender, e) =>
                 {
                     Console.WriteLine("WS ERROR");
+                    WS.Close(CloseStatusCode.Abnormal);
                 };
                 WS.OnClose += (sender, e) =>
                 {
                     Console.WriteLine("WS CLOSED");
+                };
+                WS.OnClose += (sender, e) => 
+                {
+                    if (!e.WasClean || e.Code == (ushort)CloseStatusCode.Abnormal)
+                    {
+                        ReCreate();
+                        StartConnecting();
+                    }
                 };
                 WS.OnMessage += (sender, e) =>
                 {
@@ -72,6 +81,13 @@ namespace RasPi
             {
                 Console.WriteLine("WS CONNECTING...");
                 WS.Connect();
+            }
+        }
+        static public void ReCreate()
+        {
+            if (!WS.IsAlive)
+            {
+                WS = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
             }
         }
     }

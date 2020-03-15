@@ -58,14 +58,14 @@ namespace RasPi
 
                     if (counter % sf == 0) 
                     {
-                        if (!WS.IsAlive)
+                        string clientJson = JsonSerializer.Serialize(clientData);
+                        try
                         {
-                            WebSocketContext.StartConnecting();
-                        }
-                        else
-                        {
-                            string clientJson = JsonSerializer.Serialize(clientData);
                             WS.Send(clientJson);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
                         }
                         if (counter > 4294967000) counter = 0;
                     }
