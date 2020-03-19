@@ -458,12 +458,14 @@ function msgStopId(id) {
 
 
 /********************** WEBSOCKET STUFF **********************/
-const mySocket = new WebSocket('ws://echo.websocket.org');          // test server
-//const mySocket = new WebSocket('ws://79.172.214.20/websocket/');  // live server
+//const mySocket = new WebSocket('ws://echo.websocket.org');          	// test server
+const mySocket = new WebSocket('ws://79.172.214.20:8866');  			// live server
 
 mySocket.addEventListener('open', function (event) {
+	var sendObj = { type : 'login' };/******************************************************************************/
     console.log("Connection successful: " + mySocket.url);
-    mySocket.send(JSON.stringify(msgGreeting));
+    mySocket.send(JSON.stringify(sendObj));
+    // mySocket.send(JSON.stringify(msgGreeting));
 });
 
 mySocket.addEventListener('message', function (event) {
@@ -472,7 +474,11 @@ mySocket.addEventListener('message', function (event) {
 });
 
 function sendWsMessage(obj) {
-    mySocket.send(JSON.stringify(obj))
+	obj = { 
+		type:"message", 
+		message:"teszt üzenet"
+	};
+    mySocket.send(JSON.stringify(obj));
 }
 
 
