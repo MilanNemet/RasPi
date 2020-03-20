@@ -474,7 +474,7 @@ mySocket.addEventListener('message', function (event) {
 });
 
 function sendWsMessage(obj) {
-	obj = { 
+    obj = { /*****************************************************************************************************/
 		type:"message", 
 		message:"teszt üzenet"
 	};
