@@ -71,8 +71,7 @@ namespace RasPi
         {
             if (e.IsText)
             {
-                DoControl(e.Data.ToUpper());
-                //DoControl((new MessageBlock(e.Data)).Value);
+                DoControl((new MessageBlock(e.Data)).Value);
                 return;
             }
             if (e.IsBinary)
