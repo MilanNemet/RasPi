@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace RasPi
@@ -11,7 +10,13 @@ namespace RasPi
         public string Value { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public MessageBlock() { }
+        public MessageBlock() 
+        {
+            Type = "auth";
+            UserId = 0;
+            Value = "greeting";
+            TimeStamp = DateTime.Now;
+        }
         public MessageBlock(float[] value)
         {
             Type = "control";
@@ -26,6 +31,11 @@ namespace RasPi
             UserId = mb.UserId;
             Value = mb.Value;
             TimeStamp = mb.TimeStamp;
+        }
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
         }
     }
 }
