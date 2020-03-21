@@ -23,6 +23,7 @@ namespace RasPi
                 WS.OnOpen += (sender, e) =>
                 {
                     Console.WriteLine("WS OPEN");
+                    WS.Send(new MessageBlock().ToString());
                 };
                 WS.OnError += (sender, e) =>
                 {
