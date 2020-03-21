@@ -333,20 +333,20 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
     allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
 
     ////////// TEST RUN:
-    setInterval(
-        function () {
-            var dataArray = [
-                GenerateRandomSigned(),
-                GenerateRandomSigned(),
-                GenerateRandomSigned(),
-                GenerateRandomSigned(),
-                GenerateRandomSigned(),
-                GenerateRandomSigned()
-            ];
-            sendWsMessage(dataArray);
-        },
-        2000
-    );
+    //setInterval(
+    //    function () {
+    //        var dataArray = [
+    //            GenerateRandomSigned(),
+    //            GenerateRandomSigned(),
+    //            GenerateRandomSigned(),
+    //            GenerateRandomSigned(),
+    //            GenerateRandomSigned(),
+    //            GenerateRandomSigned()
+    //        ];
+    //        sendWsMessage(dataArray);
+    //    },
+    //    2000
+    //);
     //// End Of Main
 }
 
