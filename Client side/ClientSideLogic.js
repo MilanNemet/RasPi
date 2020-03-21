@@ -410,7 +410,7 @@ var keySwitchHandler = function (e) { keySwitch(e) };
 
 /******** AUTH-MESSAGE CONSTANTS ********/
 const msgGreeting = {
-    Type: "auth",
+    /*T*/type: "login",           /*****************************************************************************************************/
     Value: "greeting",
     TimeStamp: new Date()
 };
@@ -462,10 +462,8 @@ function msgStopId(id) {
 const mySocket = new WebSocket('ws://79.172.214.20:8866');  			// live server
 
 mySocket.addEventListener('open', function (event) {
-	var sendObj = { type : 'login' };/******************************************************************************/
     console.log("Connection successful: " + mySocket.url);
-    mySocket.send(JSON.stringify(sendObj));
-    // mySocket.send(JSON.stringify(msgGreeting));
+    mySocket.send(JSON.stringify(msgGreeting));
 });
 
 mySocket.addEventListener('message', function (event) {
@@ -474,10 +472,14 @@ mySocket.addEventListener('message', function (event) {
 });
 
 function sendWsMessage(obj) {
-    obj = { /*****************************************************************************************************/
-		type:"message", 
-		message:"teszt üzenet"
-	};
+    obj = {                         /*****************************************************************************************************/
+        type: "update",             /*****************************************************************************************************/
+        momentum: 0,                /*****************************************************************************************************/
+        angle: 0,                   /*****************************************************************************************************/
+        x: 0,                       /*****************************************************************************************************/
+        y: 0,                       /*****************************************************************************************************/
+        name: "teszt üzenet",       /*****************************************************************************************************/
+    };                              /*****************************************************************************************************/
     mySocket.send(JSON.stringify(obj));
 }
 
