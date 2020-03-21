@@ -56,9 +56,11 @@ namespace RasPi
                         vmx.Velocity, vmy.Velocity, vmz.Velocity 
                     };
 
+                    MessageBlock sendMsg = new MessageBlock(clientData);
+
                     if (counter % sf == 0) 
                     {
-                        string clientJson = JsonSerializer.Serialize(clientData);
+                        string clientJson = JsonSerializer.Serialize(sendMsg);
                         try
                         {
                             WS.Send(clientJson);
