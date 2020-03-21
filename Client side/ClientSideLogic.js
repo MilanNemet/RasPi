@@ -410,7 +410,7 @@ var keySwitchHandler = function (e) { keySwitch(e) };
 
 /******** AUTH-MESSAGE CONSTANTS ********/
 const msgGreeting = {
-    Type: "login",           /*****************************************************************************************************/
+    Type: "auth",
     Value: "greeting",
     TimeStamp: new Date()
 };
