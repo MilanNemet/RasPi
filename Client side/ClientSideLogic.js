@@ -468,7 +468,7 @@ mySocket.addEventListener('open', function (event) {
 
 mySocket.addEventListener('message', function (event) {
     console.log(event.data);
-    updateChartsByMutating(allCharts, JSON.parse(event.data));
+    updateChartsByMutating(allCharts, JSON.parse(JSON.parse(event.data).Value));
 });
 
 function sendWsMessage(obj) {
