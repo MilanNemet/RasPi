@@ -59,17 +59,18 @@ namespace RasPi
                 while (str != "exit")
                 {
                     str = Console.ReadLine();
-                    WS.Send(str);
                 }
+                senderThread.Abort();
+                WS.Close(CloseStatusCode.Normal, "Terminated by user...");
                 Thread.Sleep(500);
             }
             catch
             {
+                WS.Close(CloseStatusCode.Abnormal, "Terminated by an Exception!");
                 throw;
             }
             finally
             {
-                WS.Close();
                 motorController.Dispose();
                 sensorController.Dispose();
             }
