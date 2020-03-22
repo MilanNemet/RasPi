@@ -16,13 +16,14 @@ lis3dh = adafruit_lis3dh.LIS3DH_I2C(i2c, int1=int1)
 
 lis3dh.range = adafruit_lis3dh.RANGE_4_G
 
+gF = 9.733222490643643
 start = time.time()
 time.sleep(2) #synchronize with caller
 
 while(True):
     try:
         stop = time.time()
-        accelero_tuple = lis3dh.acceleration + (stop-start,)
+        accelero_tuple = (lis3dh.acceleration[0], lis3dh.acceleration[1], lis3dh.acceleration[2] - gF, stop-start)
         start = time.time()
         b_arr = bytearray(json.dumps(accelero_tuple).encode())
         remote_socket.sendto(b_arr, (UDP_IP, UDP_PORT))
