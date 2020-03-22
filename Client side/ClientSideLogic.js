@@ -330,7 +330,7 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
         }
     });
 
-    allCharts = [XaAccChart, XaVelChart, YaAccChart, YaVelChart, ZaAccChart, ZaVelChart];
+    allCharts = [XaAccChart, YaAccChart, ZaAccChart, XaVelChart, YaVelChart, ZaVelChart];
 
     ////////// TEST RUN:
     //setInterval(
