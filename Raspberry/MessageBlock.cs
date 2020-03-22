@@ -10,7 +10,7 @@ namespace RasPi
         public string Value { get; set; }
         public DateTime TimeStamp { get; set; }
 
-        public MessageBlock() 
+        public MessageBlock()
         {
             Type = "auth";
             UserId = 0;

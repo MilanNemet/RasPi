@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RasPi
+﻿namespace RasPi
 {
     static class ExtensionMethods
     {

@@ -123,7 +123,7 @@ namespace RasPi
                 motionState.Vector &= Direction.RMask;
                 HandleSLR();
             }
-            Thread.Sleep(100); // won't be necessary due to network latency
+            Thread.Sleep(50);
         }
 
         #region HANDLERS

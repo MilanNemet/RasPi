@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Configuration;
-using WebSocketSharp;
 using System.Threading;
-using System.Collections.Generic;
-using System.Text;
+using WebSocketSharp;
 
 namespace RasPi
 {
@@ -34,10 +32,11 @@ namespace RasPi
                 {
                     Console.WriteLine("WS CLOSED");
                 };
-                WS.OnClose += (sender, e) => 
+                WS.OnClose += (sender, e) =>
                 {
                     if (!e.WasClean || e.Code == (ushort)CloseStatusCode.Abnormal)
                     {
+                        WS.Close();
                         ReCreate();
                         StartConnecting();
                     }
@@ -63,7 +62,6 @@ namespace RasPi
                     WS.Send(str);
                 }
                 Thread.Sleep(500);
-                
             }
             catch
             {
