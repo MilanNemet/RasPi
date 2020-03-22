@@ -468,7 +468,10 @@ mySocket.addEventListener('open', function (event) {
 
 mySocket.addEventListener('message', function (event) {
     console.log(event.data);
-    updateChartsByMutating(allCharts, JSON.parse(JSON.parse(event.data).Value));
+	var reveived = JSON.parse(event.data);
+	if(reveived.Type === "control"){
+		updateChartsByMutating(allCharts, JSON.parse(reveived.Value));
+	}
 });
 
 function sendWsMessage(obj) {
