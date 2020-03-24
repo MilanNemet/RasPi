@@ -83,14 +83,15 @@ class EpollSocketServer{
 			case 'auth':
 				if ($message_data['Value'] == "greeting")
 				{
-					self::send($id,'{"type":"welcome","id":"'.$id.'"}');
+					if ($id == 0)
+					{
+						$myfile = fopen("/var/www/raspi/ci_application/third_party/auth.txt", "w") or die("Unable to open file!");
+						$txt = "true";
+						fwrite($myfile, $txt);
+						fclose($myfile);
+					}
 
-					$myfile = fopen("/var/www/raspi/ci_application/third_party/auth.txt", "w") or die("Unable to open file!");
-					$txt = "John Doe\n";
-					fwrite($myfile, $txt);
-					$txt = "Jane Doe\n".time();
-					fwrite($myfile, $txt);
-					fclose($myfile);
+					self::send($id,'{"type":"welcome","id":"'.$id.'"}');
 				}
 			break;
 
