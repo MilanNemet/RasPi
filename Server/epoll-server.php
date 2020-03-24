@@ -83,7 +83,7 @@ class EpollSocketServer{
 			case 'auth':
 				if ($message_data['Value'] == "greeting")
 				{
-					if ($id == 0)
+					if ($message_data['UserId'] == 0)
 					{
 						$myfile = fopen("/var/www/raspi/ci_application/third_party/auth.txt", "w") or die("Unable to open file!");
 						$txt = "true";
