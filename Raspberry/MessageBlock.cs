@@ -12,15 +12,24 @@ namespace RasPi
 
         public MessageBlock()
         {
-            Type = "auth";
-            UserId = 0;
-            Value = "greeting";
+            //for JsonSerializer.Deserialize<T>(A)
+        }
+        public MessageBlock(string[] values)
+        {
+            if (values.Length != 2)
+            {
+                throw new ArgumentException("\n\npublic MessageBlock(params string[] values) \n" +
+                    "\t -> {values.Length} has to be equal 2 !!!\n\n");
+            }
+            Type = values[0];
+            UserId = -1;
+            Value = values[1];
             TimeStamp = DateTime.Now;
         }
         public MessageBlock(float[] value)
         {
             Type = "control";
-            UserId = 0;
+            UserId = -1;
             Value = JsonSerializer.Serialize(value);
             TimeStamp = DateTime.Now;
         }

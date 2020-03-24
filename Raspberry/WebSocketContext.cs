@@ -21,21 +21,20 @@ namespace RasPi
                 WS.OnOpen += (sender, e) =>
                 {
                     Console.WriteLine("WS OPEN");
-                    WS.Send(new MessageBlock().ToString());
+                    WS.Send(new MessageBlock(new string[] { "auth", "greeting" }).ToString());
                 };
                 WS.OnError += (sender, e) =>
                 {
                     Console.WriteLine("WS ERROR");
+                    WS.Send(new MessageBlock(new string[] { "auth", "goodbye" }).ToString());
                     WS.Close(CloseStatusCode.Abnormal);
                 };
                 WS.OnClose += (sender, e) =>
                 {
                     Console.WriteLine("WS CLOSED");
-                };
-                WS.OnClose += (sender, e) =>
-                {
                     if (!e.WasClean || e.Code == (ushort)CloseStatusCode.Abnormal)
                     {
+                        WS.Send(new MessageBlock(new string[] { "auth", "goodbye" }).ToString());
                         WS.Close();
                         ReCreate();
                         StartConnecting();
@@ -60,17 +59,20 @@ namespace RasPi
                 {
                     str = Console.ReadLine();
                 }
-                senderThread.Abort();
+
+                WS.Send(new MessageBlock(new string[] { "auth", "goodbye" }).ToString());
                 WS.Close(CloseStatusCode.Normal, "Terminated by user...");
                 Thread.Sleep(500);
             }
             catch
             {
+                WS.Send(new MessageBlock(new string[] { "auth", "goodbye" }).ToString());
                 WS.Close(CloseStatusCode.Abnormal, "Terminated by an Exception!");
                 throw;
             }
             finally
             {
+                WS.Send(new MessageBlock(new string[] { "auth", "goodbye" }).ToString());
                 motorController.Dispose();
                 sensorController.Dispose();
             }
@@ -81,6 +83,7 @@ namespace RasPi
             {
                 Console.WriteLine("WS CONNECTING...");
                 WS.Connect();
+                Thread.Sleep(1000);
             }
         }
         static public void ReCreate()
