@@ -81,11 +81,13 @@ class EpollSocketServer{
 		switch($message_data['Type'])
 		{
 			case 'auth':
+
+				$myfile = fopen("/var/www/raspi/ci_application/third_party/auth.txt", "w") or die("Unable to open file!");
+
 				if ($message_data['Value'] == "greeting")
 				{
-					if ($message_data['UserId'] == 0)
+					if ($message_data['UserId'] == -1)
 					{
-						$myfile = fopen("/var/www/raspi/ci_application/third_party/auth.txt", "w") or die("Unable to open file!");
 						$txt = "true";
 						fwrite($myfile, $txt);
 						fclose($myfile);
@@ -93,6 +95,17 @@ class EpollSocketServer{
 
 					self::send($id,'{"type":"welcome","id":"'.$id.'"}');
 				}
+
+				if ($message_data['Value'] == "goodbye")
+				{
+					if ($message_data['UserId'] == -1)
+					{
+						$txt = "false";
+						fwrite($myfile, $txt);
+						fclose($myfile);
+					}
+				}
+
 			break;
 
 			case 'control':
@@ -105,7 +118,7 @@ class EpollSocketServer{
 				);
 				return self::send_to_all(json_encode($new_message), $id);
 			break;
-			
+
 			default:
 			break;
 		}
