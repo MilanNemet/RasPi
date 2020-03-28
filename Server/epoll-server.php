@@ -2,7 +2,7 @@
 set_time_limit(0);
 ini_set('memory_limit','500M');
 error_reporting(0);
-//require_once (__DIR__.'/ip_location/IP.php');
+
 class EpollSocketServer{
 	private static $socket;
 	private static $connections;
@@ -17,7 +17,7 @@ class EpollSocketServer{
 		$socket_server = stream_socket_server("tcp://0.0.0.0:{$port}", $errno, $errstr);
 		if (!$socket_server) die("$errstr ($errno)");
 
-		stream_set_blocking($socket_server, 0); // 非阻塞
+		stream_set_blocking($socket_server, 0); // Non-blocking
 		$base = event_base_new();
 		$event = event_new();
 		event_set($event, $socket_server, EV_READ | EV_PERSIST, array(__CLASS__, 'ev_accept'), $base);
@@ -55,8 +55,8 @@ class EpollSocketServer{
 		return count(self::$connections);
 	}	
 	function ev_read($buffer, $id){ 		
- 		if(!self::$users[$id]['handshaked']){//首次连接进行握手
- 			$read = event_buffer_read($buffer, 1024*5);//握手最多只读5k
+ 		if(!self::$users[$id]['handshaked']){			//Connect for handshake for the first time
+ 			$read = event_buffer_read($buffer, 1024*5);	//Handshake up to 5k
  		    $tmp = str_replace("\r", '', $read);
             if (strpos($tmp, "\n\n") === false ) {
             	return; 
@@ -77,7 +77,7 @@ class EpollSocketServer{
 			return ;
 		}
 
-		/** raspi switch */
+		//Raspi switch
 		switch($message_data['Type'])
 		{
 			case 'auth':
@@ -109,43 +109,14 @@ class EpollSocketServer{
 			default:
 			break;
 		}
-
-		/*
-		switch($message_data['type']){
-			case 'login':
-				self::send($id,'{"type":"welcome","id":"'.$id.'"}');
-				break;
-			case 'update':// 转播给所有用户
-				self::send_to_all(json_encode(array(
-					'type'     => 'update',
-					'id'         => $id,
-					'angle'   => $message_data["angle"]+0,
-					'momentum' => $message_data["momentum"]+0,
-					'x'                   => $message_data["x"]+0,
-					'y'                   => $message_data["y"]+0,
-					'life'                => 1,
-					'name'           => isset($message_data['name']) ? $message_data['name'] : 'xkd-'.$id,
-					'authorized'  => false))
-				);
-				break;
-			case 'message':// 向大家说
-				$new_message = array(
-					'type'=>'message',
-					'id'=>$id,
-					'message'=>$message_data['message'],
-				);
-				return self::send_to_all(json_encode($new_message));
-			default:
-				break;
-		}
-		*/
 	}
+	
 	protected function send($id,$message) {
 		$message = $this->frame($message,self::$users[$id]);
 		event_buffer_write(self::$buffers[$id],$message);
 	}
 	
-	//广播
+	//Broadcast
 	function send_to_all($message, $skip_id){
 		foreach (self::$buffers as $id => $buffer){
 
@@ -175,7 +146,6 @@ class EpollSocketServer{
 			self::$users[$id]['requestedResource']=$headers['get'];
 		}
 		else {
-			// todo: fail the connection
 			$handshakeResponse = "HTTP/1.1 405 Method Not Allowed\r\n\r\n";
 		}
 		if (!isset($headers['host']) || !$this->checkHost($headers['host'])) {
@@ -206,7 +176,7 @@ class EpollSocketServer{
 		// Done verifying the _required_ headers and optionally required headers.
 		if (isset($handshakeResponse)) {
 			event_buffer_write(self::$buffers[$id],$handshakeResponse);
-			$this->ev_error(self::$buffers[$id], '握手失败', $id);
+			$this->ev_error(self::$buffers[$id], 'Handshake failure', $id);
 			return;
 		}
 		self::$users[$id]['headers']=$headers;
@@ -345,7 +315,7 @@ class EpollSocketServer{
 	}
 	
 	protected function deframe($message, &$user,$id=null) {
-		//echo $this->strtohex($message);
+		
 		$headers = $this->extractHeaders($message);
 		$pongReply = false;
 		$willClose = false;
@@ -425,7 +395,6 @@ class EpollSocketServer{
 	}
 	protected function checkRSVBits($headers,$user) { // override this method if you are using an extension where the RSV bits are used.
 		if (ord($headers['rsv1']) + ord($headers['rsv2']) + ord($headers['rsv3']) > 0) {
-			//$this->disconnect($user); // todo: fail connection
 			return true;
 		}
 		return false;
