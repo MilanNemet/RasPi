@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RasPi.SensorController">
+    <Position X="3.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAgAACgiAAAAAAAAAAAAAwAAAAkAIAAAAAAABAA=</HashCode>
+      <FileName>SensorController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="vmx" />
+      <Field Name="vmy" />
+      <Field Name="vmz" />
+      <Field Name="RemoteIpEndPoint" />
+      <Field Name="RemoteUdpClient" />
+      <Property Name="WS" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RasPi.VelocityManager">
+    <Position X="6.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAIAIAAAAAAAAgAACAAAAAAAAAACACAAAEAAA=</HashCode>
+      <FileName>VelocityManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebSocketSharp.WebSocket" Collapsed="true">
+    <Position X="3.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Net.IPEndPoint" Collapsed="true">
+    <Position X="0.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Net.Sockets.UdpClient" Collapsed="true">
+    <Position X="0.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
