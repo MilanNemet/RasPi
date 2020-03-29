@@ -7,9 +7,13 @@ namespace RasPi
 {
     class WebSocketContext
     {
+        private MotorController Mc { get; set; }
+        private SensorController Sc { get; set; }
         public WebSocketContext(MotorController motorController, SensorController sensorController)
         {
-            InitContext(motorController, sensorController);
+            Mc = motorController;
+            Sc = sensorController;
+            InitContext(Mc, Sc);
         }
 
         static private WebSocket WS { get; set; } = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
