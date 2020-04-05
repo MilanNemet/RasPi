@@ -49,9 +49,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        max: 50,
-                        min: -50,
-                        stepSize: 5
+                        max: 10,
+                        min: -10,
+                        stepSize: 1
                     }
                 }],
                 xAxes: [{
@@ -101,9 +101,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        max: 50,
-                        min: -50,
-                        stepSize: 5
+                        max: 10,
+                        min: -10,
+                        stepSize: 1
                     }
                 }],
                 xAxes: [{
@@ -157,9 +157,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 50,
-                        min: -50,
-                        stepSize: 5
+                        max: 10,
+                        min: -10,
+                        stepSize: 1
                     }
                 }]
             },
@@ -210,9 +210,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                     },
                     ticks: {
                         beginAtZero: true,
-                        max: 50,
-                        min: -50,
-                        stepSize: 5
+                        max: 10,
+                        min: -10,
+                        stepSize: 1
                     }
                 }]
             },
@@ -256,9 +256,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        max: 50,
-                        min: -50,
-                        stepSize: 5
+                        max: 10,
+                        min: -10,
+                        stepSize: 1
                     }
                 }],
                 xAxes: [{
@@ -308,9 +308,9 @@ window.onload = function () {/************************** MAIN FUNCTION ENTRY POI
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        max: 50,
-                        min: -50,
-                        stepSize: 5
+                        max: 10,
+                        min: -10,
+                        stepSize: 1
                     }
                 }],
                 xAxes: [{
