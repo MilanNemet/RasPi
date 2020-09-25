@@ -80,6 +80,11 @@ namespace RasPi
                 return;
             }
         }
+        public void HandleEmergency()
+        {
+                DoControl("S");
+                return;
+        }
         void DoControl(string ControlSign)
         {
             //Starters

@@ -16,7 +16,8 @@ namespace RasPi
 		private int port = int.Parse(ConfigurationManager.AppSettings["UdpPort"]);
 		private bool terminate = false;
 		private uint counter = 1;
-		private uint sf = uint.Parse(ConfigurationManager.AppSettings["SendingFrequency"]);
+		private uint snm = uint.Parse(ConfigurationManager.AppSettings["SendingNthMetrics"]);
+		private byte deadline = byte.Parse(ConfigurationManager.AppSettings["DeadLine"]);
 
 		private UdpClient RemoteUdpClient;
 		private IPEndPoint RemoteIpEndPoint;
@@ -48,26 +49,31 @@ namespace RasPi
 					vmy.ReCount(information[1], information[3]);
 					vmz.ReCount(information[2], information[3]);
 
-					float[] clientData = new float[]
+					if (information[0] > deadline || information[1] > deadline || information[2] > deadline)
 					{
-						information[0], information[1], information[2],
-						vmx.Velocity, vmy.Velocity, vmz.Velocity
-					};
+						WebSocketContext.TriggerEmergency();
+					}
 
-					MessageBlock sendMsg = new MessageBlock(clientData);
-
-					if (counter % sf == 0)
+					if (counter % snm == 0)
 					{
+						float[] clientData = new float[]
+						{
+							information[0], information[1], information[2],
+							vmx.Velocity, vmy.Velocity, vmz.Velocity
+						};
+						MessageBlock sendMsg = new MessageBlock(clientData);
 						string clientJson = JsonSerializer.Serialize(sendMsg);
+						
 						try
 						{
 							WS.Send(clientJson);
 						}
-						catch (Exception e)
+						catch (Exception ex)
 						{
-							Console.WriteLine(e.Message);
+							Console.WriteLine("WS send error!\n\n" + ex.Message);
 						}
-						if (counter > 4294967000) counter = 0;
+						
+						if (counter > 4294967000) counter = 1;
 					}
 					++counter;
 				}
@@ -84,8 +90,8 @@ namespace RasPi
 			Process process = new Process();
 			ProcessStartInfo startInfo = new ProcessStartInfo();
 			startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			startInfo.FileName = ConfigurationManager.AppSettings["ProcessName"];
-			startInfo.Arguments = ConfigurationManager.AppSettings["ProcessArgs"];
+			startInfo.FileName = ConfigurationManager.AppSettings["PythonProcessName"];
+			startInfo.Arguments = ConfigurationManager.AppSettings["PythonProcessArgs"];
 			process.StartInfo = startInfo;
 			process.Start();
 		}

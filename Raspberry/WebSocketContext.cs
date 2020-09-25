@@ -10,7 +10,7 @@ namespace RasPi
         private MotorController Mc { get; set; }
         private SensorController Sc { get; set; }
         public WebSocketContext(MotorController motorController, SensorController sensorController)
-        {
+        {;
             Mc = motorController;
             Sc = sensorController;
             InitContext(Mc, Sc);
@@ -48,7 +48,7 @@ namespace RasPi
                 {
                     Console.WriteLine(e.Data);
                 };
-                WS.OnMessage += motorController.HandleCommand;
+                //~ WS.OnMessage += motorController.HandleCommand;
 
                 StartConnecting();
 
@@ -97,5 +97,13 @@ namespace RasPi
                 WS = new WebSocket(ConfigurationManager.AppSettings["WebSocketAddress"]);
             }
         }
+        
+        public static void TriggerEmergency()
+        {
+            //~ mc.HandleEmergency();
+            return;
+        }
+        
+        
     }
 }
