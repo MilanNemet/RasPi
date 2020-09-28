@@ -48,7 +48,7 @@ namespace RasPi
                 {
                     Console.WriteLine(e.Data);
                 };
-                //~ WS.OnMessage += motorController.HandleCommand;
+                WS.OnMessage += motorController.HandleCommand;
 
                 StartConnecting();
 

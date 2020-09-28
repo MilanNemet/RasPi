@@ -7,8 +7,8 @@ namespace RasPi
     {
         static void Main()
         {
-            StartStreaming();
-            new WebSocketContext(/*new MotorController()*/ null, new SensorController());
+//            StartStreaming();
+            new WebSocketContext(new MotorController(), new SensorController());
         }
         
         static void StartStreaming()
