@@ -28,7 +28,7 @@ namespace RasPi
         public MotorController()
         {
             //gpio = new GpioController();
-	    var pns = PinNumberingScheme.Logical;
+	        var pns = PinNumberingScheme.Logical;
             var rpi3Driver = new System.Device.Gpio.Drivers.RaspberryPi3Driver();
             gpio = new GpioController(pns, rpi3Driver);
 
