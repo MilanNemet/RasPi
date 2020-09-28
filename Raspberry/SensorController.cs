@@ -22,15 +22,14 @@ namespace RasPi
 		private UdpClient RemoteUdpClient;
 		private IPEndPoint RemoteIpEndPoint;
 		public WebSocket WS { get; set; }
-		public WebSocketContext OwnWsc { get; set; }
+		public WebSocketContext OwnWsc { get; set; } = null;
 
 		private VelocityManager vmx = new VelocityManager(float.Parse(ConfigurationManager.AppSettings["MuzzleVelocity-X"]));
 		private VelocityManager vmy = new VelocityManager(float.Parse(ConfigurationManager.AppSettings["MuzzleVelocity-Y"]));
 		private VelocityManager vmz = new VelocityManager(float.Parse(ConfigurationManager.AppSettings["MuzzleVelocity-Z"]));
 
-		public SensorController(WebSocketContext wsc)
+		public SensorController()
 		{
-			OwnWsc = wsc;
 			RemoteUdpClient = new UdpClient(port);
 			RemoteIpEndPoint = new IPEndPoint(IPAddress.Parse(localHost), port);
 		}
