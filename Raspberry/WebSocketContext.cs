@@ -13,6 +13,7 @@ namespace RasPi
         {;
             Mc = motorController;
             Sc = sensorController;
+            Sc.OwnWsc = this;
             InitContext(Mc, Sc);
         }
 
@@ -98,9 +99,9 @@ namespace RasPi
             }
         }
         
-        public static void TriggerEmergency()
+        public static void TriggerEmergency(WebSocketContext wsc)
         {
-            //~ mc.HandleEmergency();
+            wsc.Mc.HandleEmergency();
             return;
         }
         
