@@ -50,10 +50,10 @@ namespace RasPi
 					vmy.ReCount(information[1], information[3]);
 					vmz.ReCount(information[2], information[3]);
 
-					if (information[0] > deadline || information[1] > deadline || information[2] > deadline)
-					{
-						WebSocketContext.TriggerEmergency(OwnWsc);
-					}
+					//~ if (information[0] > deadline || information[1] > deadline || information[2] > deadline)
+					//~ {
+						//~ WebSocketContext.TriggerEmergency(OwnWsc);
+					//~ }
 
 					if (counter % snm == 0)
 					{
