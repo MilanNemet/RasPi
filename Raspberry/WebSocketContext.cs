@@ -10,7 +10,7 @@ namespace RasPi
         private MotorController Mc { get; set; }
         private SensorController Sc { get; set; }
         public WebSocketContext(MotorController motorController, SensorController sensorController)
-        {;
+        {
             Mc = motorController;
             Sc = sensorController;
             Sc.OwnWsc = this;
